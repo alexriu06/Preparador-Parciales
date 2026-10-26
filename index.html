@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preparador de Parciales - Matemáticas & Probabilidad</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const initialBlocks = [
+      {
+        id: 1,
+        title: "BLOQUE 1: Espacios Muestrales y Combinatoria",
+        badgeColor: "bg-indigo-500/20 text-indigo-300 border-indigo-500/30",
+        cardBg: "bg-indigo-950/40 border-indigo-500/30",
+        headerBg: "bg-indigo-900/50 text-indigo-200 border-indigo-500/40",
+        exercises: [
+          { id: "L0-E3", list: "Llista 0", num: "Ej. 3", title: "Combinatoria e Inclusión-Exclusión", desc: "Grupos con restricciones por clases. Conteo de casos favorables y posibles.", state: "pending", comment: "" },
+          { id: "L0-E6", list: "Llista 0", num: "Ej. 6", title: "Eventos Equiprobables", desc: "Coincidencias en pisos/grupos con espacios muestrales discretos.", state: "pending", comment: "" },
+          { id: "L0-E12", list: "Llista 0", num: "Ej. 12", title: "Problema de Chicago (Desarranjaments)", desc: "Emparejamientos y límites de n parejas cuando n -> inf.", state: "pending", comment: "" },
+          { id: "L0-E18", list: "Llista 0", num: "Ej. 18", title: "Muestreo Con vs Sin Reemplazo", desc: "Comparativa de modelos de extracción y tiempos de espera.", state: "pending", comment: "" },
+          { id: "L1-E1", list: "Llista 1", num: "Ej. 1", title: "Piezas Defectuosas", desc: "Combinatoria clásica con combinaciones n sobre k.", state: "pending", comment: "" },
+          { id: "L1-E4", list: "Llista 1", num: "Ej. 4", title: "Particiones de Grupos Simétricos", desc: "Reparto de estudiantes en subgrupos de igual tamaño.", state: "pending", comment: "" }
+        ]
+      },
+      {
+        id: 2,
+        title: "BLOQUE 2: Probabilidad Condicionada y Bayes",
+        badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        cardBg: "bg-emerald-950/40 border-emerald-500/30",
+        headerBg: "bg-emerald-900/50 text-emerald-200 border-emerald-500/40",
+        exercises: [
+          { id: "L2-E3", list: "Llista 2", num: "Ej. 3", title: "Carta Perdida en Baraja", desc: "Definición del evento observado y actualización Bayesiana.", state: "pending", comment: "" },
+          { id: "L2-E4", list: "Llista 2", num: "Ej. 4", title: "Problema del Taxi y Testigo", desc: "Sesgo de la probabilidad base y Bayes con tasa de acierto.", state: "pending", comment: "" },
+          { id: "L2-E5", list: "Llista 2", num: "Ej. 5", title: "Doble Test Diagnóstico", desc: "Independencia condicionada al estado de salud del paciente.", state: "pending", comment: "" },
+          { id: "L3-E1", list: "Llista 3", num: "Ej. 1", title: "Urnas Secuenciales Interconectadas", desc: "Teorema de la Probabilidad Total con extracciones cruzadas.", state: "pending", comment: "" },
+          { id: "L3-E3", list: "Llista 3", num: "Ej. 3", title: "Modelo de Urnas de Polya", desc: "Invariancia de probabilidades al añadir bolas por inducción.", state: "pending", comment: "" },
+          { id: "L3-E4", list: "Llista 3", num: "Ej. 4", title: "Proceso de Selección en 2 Etapas", desc: "Dado previo para elección de urna y tiradas posteriores.", state: "pending", comment: "" },
+          { id: "L3-E5", list: "Llista 3", num: "Ej. 5", title: "Elección entre n+1 Urnas", desc: "Extracción múltiple sin reemplazo y sumatorios combinatorios.", state: "pending", comment: "" }
+        ]
+      },
+      {
+        id: 3,
+        title: "BLOQUE 3: Variables Aleatorias Discretas y PMF",
+        badgeColor: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+        cardBg: "bg-amber-950/40 border-amber-500/30",
+        headerBg: "bg-amber-900/50 text-amber-200 border-amber-500/40",
+        exercises: [
+          { id: "L4-E1", list: "Llista 4", num: "Ej. 1", title: "Construcción de Espacio y PMF", desc: "Monedas seguidas, pmf de X y transformación Y = g(X).", state: "pending", comment: "" },
+          { id: "L4-E3", list: "Llista 4", num: "Ej. 3", title: "Suma de Dados y Soporte", desc: "Identificación rigurosa del evento {X=k} en tiradas múltiples.", state: "pending", comment: "" },
+          { id: "L5-E1", list: "Llista 5", num: "Ej. 1", title: "Máximo de Geométricas", desc: "Modelización de Z = max(X, Y) con variables independientes.", state: "pending", comment: "" },
+          { id: "L5-E2", list: "Llista 5", num: "Ej. 2", title: "Binomial con Errores", desc: "Clasificación con probabilidad de error y probabilidad total.", state: "pending", comment: "" },
+          { id: "L5-E4", list: "Llista 5", num: "Ej. 4", title: "Uniforme Discreta y Truncamiento", desc: "Transformación lineal y corte inferior mediante max(2, X).", state: "pending", comment: "" }
+        ]
+      },
+      {
+        id: 4,
+        title: "BLOQUE 4: Funciones de Distribución Acumulada (CDF)",
+        badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+        cardBg: "bg-purple-950/40 border-purple-500/30",
+        headerBg: "bg-purple-900/50 text-purple-200 border-purple-500/40",
+        exercises: [
+          { id: "L4-E2", list: "Llista 4", num: "Ej. 2", title: "CDF Mixta por Tramos", desc: "Cálculo de P(X in A) en funciones con saltos y tramos continuos.", state: "pending", comment: "" },
+          { id: "L4-E5", list: "Llista 4", num: "Ej. 5", title: "Distribución del Máximo Muestral", desc: "Extracción de n bolas con reemplazo y estudio de Gn(t).", state: "pending", comment: "" },
+          { id: "L5-E5", list: "Llista 5", num: "Ej. 5", title: "Propiedades de la CDF", desc: "Verificación de condiciones de monotonía y límites en R.", state: "pending", comment: "" },
+          { id: "L5-E6", list: "Llista 5", num: "Ej. 6", title: "Parámetros y Continuidad", desc: "Ajuste de a, b para asegurar CDF continua y densidad de Y = X^2.", state: "pending", comment: "" },
+          { id: "L6-E3", list: "Llista 6", num: "Ej. 3", title: "Probabilidad de Regiones Absolutas", desc: "Evaluación de P(|X-2| + |X| <= 4) mediante la CDF.", state: "pending", comment: "" },
+          { id: "L0-E20", list: "Llista 0", num: "Ej. 20", title: "Problema de los Sobres/Cupones", desc: "Conexión de distribuciones acumuladas con conteo general.", state: "pending", comment: "" }
+        ]
+      },
+      {
+        id: 5,
+        title: "BLOQUE 5: Densidades (PDF), Transformaciones y Momentos",
+        badgeColor: "bg-rose-500/20 text-rose-300 border-rose-500/30",
+        cardBg: "bg-rose-950/40 border-rose-500/30",
+        headerBg: "bg-rose-900/50 text-rose-200 border-rose-500/40",
+        exercises: [
+          { id: "L6-E1", list: "Llista 6", num: "Ej. 1", title: "Estudio Completo de PDF", desc: "Integral, CDF, E[X], Var(X) y variable mixta min(X, 2).", state: "pending", comment: "" },
+          { id: "L6-E2", list: "Llista 6", num: "Ej. 2", title: "Cambio de Variable Continuo y Discreto", desc: "Densidad de Y = X^2 + 1 y variable discreta Z = floor(2X).", state: "pending", comment: "" },
+          { id: "L6-E4", list: "Llista 6", num: "Ej. 4", title: "Distribución Gamma y Momentos", desc: "Integración con función Gamma de Euler y Normal al cuadrado.", state: "pending", comment: "" },
+          { id: "L6-E5", list: "Llista 6", num: "Ej. 5", title: "Distribución de Cauchy e Inversa", desc: "Inexistencia de esperanza y simetría de Y = 1/X.", state: "pending", comment: "" },
+          { id: "L0-E22", list: "Llista 0", num: "Ej. 22", title: "Integración de Sistemas e Informática", desc: "Densidades continuas aplicadas a detección de fallos.", state: "pending", comment: "" },
+          { id: "L0-E28", list: "Llista 0", num: "Ej. 28", title: "Combinación de 3 Tests Independientes", desc: "Probabilidades a priori de población con diagnósticos continuos.", state: "pending", comment: "" }
+        ]
+      }
+    ];
+
+    function App() {
+      const [selectedSubject, setSelectedSubject] = useState(null);
+      const [blocks, setBlocks] = useState(() => {
+        const saved = localStorage.getItem("math_prep_blocks");
+        return saved ? JSON.parse(saved) : initialBlocks;
+      });
+      const [copied, setCopied] = useState(false);
+
+      useEffect(() => {
+        localStorage.setItem("math_prep_blocks", JSON.stringify(blocks));
+      }, [blocks]);
+
+      const updateState = (blockId, exId, newState) => {
+        setBlocks(blocks.map(b => b.id === blockId ? {
+          ...b,
+          exercises: b.exercises.map(e => e.id === exId ? { ...e, state: newState } : e)
+        } : b));
+      };
+
+      const updateComment = (blockId, exId, newComment) => {
+        setBlocks(blocks.map(b => b.id === blockId ? {
+          ...b,
+          exercises: b.exercises.map(e => e.id === exId ? { ...e, comment: newComment } : e)
+        } : b));
+      };
+
+      const allExercises = blocks.flatMap(b => b.exercises);
+      const easyCount = allExercises.filter(e => e.state === 'easy').length;
+      const doubtCount = allExercises.filter(e => e.state === 'doubt').length;
+      const pendingCount = allExercises.filter(e => e.state === 'pending').length;
+      const progressPercent = Math.round(((easyCount + doubtCount) / allExercises.length) * 100);
+
+      const generateSummaryMarkdown = () => {
+        let md = `### 📊 RESUMEN DE PROGRESO DE ESTUDIO\n`;
+        md += `**Progreso global:** ${progressPercent}% (${easyCount + doubtCount}/${allExercises.length} resueltos)\n`;
+        md += `🟢 Fácil/Dominados: ${easyCount} | 🟡 Con dudas/difícil: ${doubtCount} | ⚪ Pendientes: ${pendingCount}\n\n`;
+
+        blocks.forEach(b => {
+          md += `#### ${b.title}\n`;
+          b.exercises.forEach(e => {
+            const icon = e.state === 'easy' ? '🟢 [FÁCIL]' : e.state === 'doubt' ? '🟡 [CON DUDAS]' : '⚪ [PENDIENTE]';
+            md += `- **${e.list} ${e.num}** (${e.title}): ${icon}\n`;
+            if (e.comment.trim()) {
+              md += `  > *Comentario/Duda:* ${e.comment.trim()}\n`;
+            }
+          });
+          md += `\n`;
+        });
+        return md;
+      };
+
+      const handleCopy = () => {
+        const text = generateSummaryMarkdown();
+        navigator.clipboard.writeText(text).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2500);
+        });
+      };
+
+      if (!selectedSubject) {
+        return (
+          <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="max-w-2xl w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-8 shadow-2xl backdrop-blur-sm text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500/20 text-blue-400 mb-6">
+                <span className="text-3xl">📚</span>
+              </div>
+              <h1 className="text-3xl font-bold text-white mb-3">¿Qué parcial quieres preparar?</h1>
+              <p className="text-slate-400 mb-8">Selecciona la asignatura que vas a repasar hoy para acceder a tu plan de ejercicios personalizado:</p>
+              
+              <div className="space-y-4">
+                <button 
+                  onClick={() => setSelectedSubject('prob')}
+                  className="w-full group p-5 bg-gradient-to-r from-blue-900/40 to-indigo-900/40 hover:from-blue-600 hover:to-indigo-600 border border-blue-500/30 hover:border-blue-400 rounded-xl transition-all duration-200 text-left flex items-center justify-between shadow-lg"
+                >
+                  <div>
+                    <h2 className="text-xl font-bold text-white group-hover:text-white flex items-center gap-2">
+                      <span>🎲</span> Parcial de Probabilitats
+                    </h2>
+                    <p className="text-sm text-slate-400 group-hover:text-blue-100 mt-1">
+                      30 ejercicios seleccionados de exámenes • 5 bloques temáticos
+                    </p>
+                  </div>
+                  <span className="text-2xl text-blue-400 group-hover:text-white group-hover:translate-x-1 transition-transform">→</span>
+                </button>
+
+                <button 
+                  onClick={() => setSelectedSubject('analisi')}
+                  className="w-full group p-5 bg-slate-800/50 hover:bg-slate-700/60 border border-slate-700 rounded-xl transition-all duration-200 text-left flex items-center justify-between"
+                >
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-300 group-hover:text-white flex items-center gap-2">
+                      <span>📐</span> Parcial d'Anàlisi Matemàtic
+                    </h2>
+                    <p className="text-sm text-slate-500 group-hover:text-slate-300 mt-1">
+                      Módulo en preparación (plantilla vacía lista para cargar)
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold px-2.5 py-1 bg-slate-700 text-slate-400 rounded-md">Próximamente</span>
+                </button>
+
+                <button 
+                  onClick={() => setSelectedSubject('geo')}
+                  className="w-full group p-5 bg-slate-800/50 hover:bg-slate-700/60 border border-slate-700 rounded-xl transition-all duration-200 text-left flex items-center justify-between"
+                >
+                  <div>
+                    <h2 className="text-xl font-bold text-slate-300 group-hover:text-white flex items-center gap-2">
+                      <span>🌐</span> Parcial de Geometria Diferencial
+                    </h2>
+                    <p className="text-sm text-slate-500 group-hover:text-slate-300 mt-1">
+                      Módulo en preparación (plantilla vacía lista para cargar)
+                    </p>
+                  </div>
+                  <span className="text-xs font-semibold px-2.5 py-1 bg-slate-700 text-slate-400 rounded-md">Próximamente</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      if (selectedSubject === 'analisi' || selectedSubject === 'geo') {
+        return (
+          <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="max-w-md w-full bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center shadow-xl">
+              <span className="text-4xl mb-4 block">🛠️</span>
+              <h2 className="text-2xl font-bold text-white mb-2">
+                {selectedSubject === 'analisi' ? "Anàlisi Matemàtic" : "Geometria Diferencial"}
+              </h2>
+              <p className="text-slate-400 mb-6">
+                Esta plantilla está lista para alojar los problemas cuando subamos los exámenes de esta materia.
+              </p>
+              <button 
+                onClick={() => setSelectedSubject(null)}
+                className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg transition-colors"
+              >
+                ← Volver al menú
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="max-w-6xl mx-auto p-4 sm:p-6 pb-24">
+          <header className="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 pb-4 pt-2 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+              <div>
+                <button 
+                  onClick={() => setSelectedSubject(null)}
+                  className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 mb-1"
+                >
+                  ← Cambiar de Parcial
+                </button>
+                <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                  <span>🎲</span> Preparación Parcial de Probabilitats
+                </h1>
+              </div>
+
+              <button
+                onClick={handleCopy}
+                className={`px-5 py-2.5 rounded-xl font-bold transition-all shadow-lg flex items-center justify-center gap-2 text-sm ${
+                  copied 
+                    ? "bg-emerald-600 text-white scale-105" 
+                    : "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/40"
+                }`}
+              >
+                <span>{copied ? "✓ Copiado al portapapeles" : "📋 Analizar los resultados"}</span>
+              </button>
+            </div>
+
+            <div className="bg-slate-800/80 border border-slate-700/60 rounded-xl p-4">
+              <div className="flex justify-between items-center text-xs font-semibold text-slate-300 mb-2">
+                <span>Progreso total resuelto: {easyCount + doubtCount} de {allExercises.length} ej.</span>
+                <span className="text-blue-400 font-bold">{progressPercent}%</span>
+              </div>
+              <div className="w-full h-3 bg-slate-950 rounded-full overflow-hidden flex">
+                <div style={{ width: `${(easyCount / allExercises.length) * 100}%` }} className="bg-emerald-500 transition-all duration-300"></div>
+                <div style={{ width: `${(doubtCount / allExercises.length) * 100}%` }} className="bg-amber-500 transition-all duration-300"></div>
+              </div>
+              <div className="flex gap-4 text-xs mt-3 text-slate-400">
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Dominados: {easyCount}</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Con dudas: {doubtCount}</span>
+                <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-slate-600 inline-block"></span> Pendientes: {pendingCount}</span>
+              </div>
+            </div>
+          </header>
+
+          <div className="space-y-8">
+            {blocks.map(block => (
+              <div key={block.id} className={`border rounded-2xl p-5 shadow-xl transition-all ${block.cardBg}`}>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className={`text-base sm:text-lg font-bold px-3 py-1.5 rounded-lg border ${block.headerBg}`}>
+                    {block.title}
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {block.exercises.map(ex => (
+                    <div key={ex.id} className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-2">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-bold px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-700/50">
+                              {ex.list} - {ex.num}
+                            </span>
+                            <h3 className="font-semibold text-slate-100 text-sm">{ex.title}</h3>
+                          </div>
+                          <p className="text-xs text-slate-400">{ex.desc}</p>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 self-start shrink-0 bg-slate-950 p-1 rounded-lg border border-slate-800">
+                          <button
+                            onClick={() => updateState(block.id, ex.id, 'easy')}
+                            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
+                              ex.state === 'easy' ? "bg-emerald-600 text-white font-bold" : "text-slate-400 hover:text-white"
+                            }`}
+                          >
+                            🟢 Fácil
+                          </button>
+                          <button
+                            onClick={() => updateState(block.id, ex.id, 'doubt')}
+                            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
+                              ex.state === 'doubt' ? "bg-amber-600 text-white font-bold" : "text-slate-400 hover:text-white"
+                            }`}
+                          >
+                            🟡 Con dudas
+                          </button>
+                          <button
+                            onClick={() => updateState(block.id, ex.id, 'pending')}
+                            className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
+                              ex.state === 'pending' ? "bg-slate-700 text-slate-200" : "text-slate-500 hover:text-slate-300"
+                            }`}
+                          >
+                            ⚪ Pendiente
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="mt-3">
+                        <textarea
+                          placeholder="Añadir observaciones, dudas sobre la solución o lo que has comentado..."
+                          value={ex.comment}
+                          onChange={(e) => updateComment(block.id, ex.id, e.target.value)}
+                          className="w-full text-xs bg-slate-950/70 border border-slate-800 rounded-lg p-2.5 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-500 transition-colors resize-y min-h-[50px]"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <button
+              onClick={handleCopy}
+              className={`px-8 py-3.5 rounded-xl font-bold transition-all shadow-xl text-base ${
+                copied 
+                  ? "bg-emerald-600 text-white scale-105" 
+                  : "bg-blue-600 hover:bg-blue-500 text-white shadow-blue-900/50"
+              }`}
+            >
+              {copied ? "✓ Resumen copiado al portapapeles" : "📋 Analizar los resultados"}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
