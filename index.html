@@ -35,10 +35,8 @@
       useEffect(() => {
         if (!containerRef.current || !window.katex) return;
 
-        // Limpiar contenido previo
         containerRef.current.innerHTML = "";
 
-        // Separar texto normal de bloques de fórmulas ($$ Bloque $$ y $ Inline $)
         const regex = /(\$\$.*?\$\$|\$.*?\$)/gs;
         const parts = text.split(regex);
 
@@ -188,7 +186,7 @@
           },
           { 
             id: "L5-E4", list: "Llista 5", num: "Ej. 4", title: "Uniforme Discreta y Truncamiento", desc: "Transformación lineal y corte inferior mediante max(2, X).",
-            statement: "Sea $X$ una v.a. discreta uniformemente distribuida en $\\{1, \\dots, m\\}$, para $m \\ge 2$.\n(1) Encuentra la pmf y la cdf de $X$.\n(2) Calcula $P(\\{X \\text{ par}\\})$.\n(3) Fijadas $a > 0$ y $b$, determina la cdf de $Y = aX + b$. ¿Qué pasa si $a$ no es strictly positiva?\n(4) Si $m > 2$, determina la ley de $Z = \\max\\{2, X\\}$.",
+            statement: "Sea $X$ una v.a. discreta uniformemente distribuida en $\\{1, \\dots, m\\}$, para $m \\ge 2$.\n(1) Encuentra la pmf y la cdf de $X$.\n(2) Calcula $P(\\{X \\text{ par}\\})$.\n(3) Fijadas $a > 0$ y $b$, determina la cdf de $Y = aX + b$. ¿Qué pasa si $a$ no es estrictamente positiva?\n(4) Si $m > 2$, determina la ley de $Z = \\max\\{2, X\\}$.",
             state: "pending", comment: "" 
           }
         ]
@@ -412,7 +410,7 @@
         exercises: [
           {
             id: "L2-E1", list: "Llista 2 (Superfícies)", num: "Ej. 1", title: "Superficie Cónica Parametrizada", desc: "Regularidad, traza y planos tangentes por el vértice.",
-            statement: "Dado $\\omega \\in (0, \\pi/2)$, demuestra que $\\varphi(u, v) = u(\\sin \\omega \\cos v, \\sin \\omega \\sin v, \\cos \\omega)$, $u \\neq 0$, $v \\in \\mathbb{R}$ es una superficie parametrizada regular.\n\nDemuestra que la traza de $\\varphi$ es $$S = \\{(x, y, z) \\in \\mathbb{R}^3 \\mid x^2 + y^2 = z^2 \\tan^2 \\omega\\} \\setminus \\{(0,0,0)\\}.$$\nProbar que todos los planos tangentes de $\\varphi$ pasan por el vértice $(0,0,0)$ del cono, y que las rectas normales cortan al eje $OZ$ forming un ángulo constante.",
+            statement: "Dado $\\omega \\in (0, \\pi/2)$, demuestra que $\\varphi(u, v) = u(\\sin \\omega \\cos v, \\sin \\omega \\sin v, \\cos \\omega)$, $u \\neq 0$, $v \\in \\mathbb{R}$ es una superficie parametrizada regular.\n\nDemuestra que la traza de $\\varphi$ es $$S = \\{(x, y, z) \\in \\mathbb{R}^3 \\mid x^2 + y^2 = z^2 \\tan^2 \\omega\\} \\setminus \\{(0,0,0)\\}.$$\nProbar que todos los planos tangentes de $\\varphi$ pasan por el vértice $(0,0,0)$ del cono, y que las rectas normales cortan al eje $OZ$ formando un ángulo constante.",
             state: "pending", comment: ""
           },
           {
@@ -424,34 +422,79 @@
       }
     ];
 
+    // FUNCIÓN AUXILIAR DE RECUPERACIÓN / MIGRACIÓN AUTOMÁTICA
+    function loadAndMigrateData(finalKey, legacyKeys, defaultBlocks) {
+      // 1. Si ya existe la clave fija definitiva, usarla
+      const savedFinal = localStorage.getItem(finalKey);
+      if (savedFinal) {
+        try { return JSON.parse(savedFinal); } catch(e){}
+      }
+
+      // 2. Si no existe, buscar en todas las versiones anteriores de las claves
+      for (const oldKey of legacyKeys) {
+        const savedOld = localStorage.getItem(oldKey);
+        if (savedOld) {
+          try {
+            const oldBlocks = JSON.parse(savedOld);
+            // Fusionar comentarios y estados anteriores manteniendo los enunciados nuevos en LaTeX
+            const merged = defaultBlocks.map(defaultBlock => {
+              const oldBlock = oldBlocks.find(b => b.id === defaultBlock.id);
+              if (!oldBlock) return defaultBlock;
+
+              return {
+                ...defaultBlock,
+                exercises: defaultBlock.exercises.map(defaultEx => {
+                  const oldEx = oldBlock.exercises.find(e => e.id === defaultEx.id);
+                  if (!oldEx) return defaultEx;
+                  return {
+                    ...defaultEx,
+                    state: oldEx.state || defaultEx.state,
+                    comment: oldEx.comment !== undefined ? oldEx.comment : defaultEx.comment
+                  };
+                })
+              };
+            });
+
+            // Guardar en la clave definitiva
+            localStorage.setItem(finalKey, JSON.stringify(merged));
+            return merged;
+          } catch (e) {}
+        }
+      }
+
+      // 3. Si es una instalación limpia sin datos previos
+      return defaultBlocks;
+    }
+
     function App() {
-      // Claves de almacenamiento v10 para asegurar la actualización limpia del JSON
-      const PROBA_STORAGE_KEY = "proba_parcial_app_v10";
-      const GEO_STORAGE_KEY = "geo_parcial_app_v3";
+      // CLAVES DEFINTIVAS PERMANENTES
+      const PROBA_FINAL_KEY = "parciales_app_proba_v_final";
+      const GEO_FINAL_KEY = "parciales_app_geo_v_final";
+
+      // CLAVES LEGACY PARA MIGRAR AUTOMÁTICAMENTE TUS DATOS ANTERIORES
+      const PROBA_MIGRATION_KEYS = ["proba_parcial_app_v10", "proba_parcial_app_v9", "proba_parcial_app_v8", "proba_parcial_app_v1"];
+      const GEO_MIGRATION_KEYS = ["geo_parcial_app_v3", "geo_parcial_app_v2", "geo_parcial_app_v1"];
 
       const [selectedSubject, setSelectedSubject] = useState(null);
 
-      const [probaBlocks, setProbaBlocks] = useState(() => {
-        const saved = localStorage.getItem(PROBA_STORAGE_KEY);
-        if (saved) return JSON.parse(saved);
-        return PROBA_BLOCKS;
-      });
+      const [probaBlocks, setProbaBlocks] = useState(() => 
+        loadAndMigrateData(PROBA_FINAL_KEY, PROBA_MIGRATION_KEYS, PROBA_BLOCKS)
+      );
 
-      const [geoBlocks, setGeoBlocks] = useState(() => {
-        const saved = localStorage.getItem(GEO_STORAGE_KEY);
-        if (saved) return JSON.parse(saved);
-        return GEO_BLOCKS;
-      });
+      const [geoBlocks, setGeoBlocks] = useState(() => 
+        loadAndMigrateData(GEO_FINAL_KEY, GEO_MIGRATION_KEYS, GEO_BLOCKS)
+      );
 
       const [copied, setCopied] = useState(false);
       const [statusFilter, setStatusFilter] = useState('all');
 
+      // Guardar siempre en la clave definitiva
       useEffect(() => {
-        localStorage.setItem(PROBA_STORAGE_KEY, JSON.stringify(probaBlocks));
+        localStorage.setItem(PROBA_FINAL_KEY, JSON.stringify(probaBlocks));
       }, [probaBlocks]);
 
       useEffect(() => {
-        localStorage.setItem(GEO_STORAGE_KEY, JSON.stringify(geoBlocks));
+        localStorage.setItem(GEO_FINAL_KEY, JSON.stringify(geoBlocks));
       }, [geoBlocks]);
 
       const currentBlocks = selectedSubject === 'prob' ? probaBlocks : selectedSubject === 'geo' ? geoBlocks : [];
@@ -475,10 +518,10 @@
         if (window.confirm("¿Deseas reiniciar todo tu progreso y comentarios de esta asignatura?")) {
           if (selectedSubject === 'prob') {
             setProbaBlocks(PROBA_BLOCKS);
-            localStorage.removeItem(PROBA_STORAGE_KEY);
+            localStorage.removeItem(PROBA_FINAL_KEY);
           } else if (selectedSubject === 'geo') {
             setGeoBlocks(GEO_BLOCKS);
-            localStorage.removeItem(GEO_STORAGE_KEY);
+            localStorage.removeItem(GEO_FINAL_KEY);
           }
         }
       };
@@ -539,7 +582,7 @@
                       <span>🎲</span> Parcial Probabilitats
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-400 group-hover:text-indigo-100 mt-1">
-                      27 ejercicios seleccionados • Renderizado matemático activo
+                      27 ejercicios seleccionados • Guardado persistente garantizado
                     </p>
                   </div>
                   <span className="text-2xl text-indigo-400 group-hover:text-white transition-transform">→</span>
@@ -554,7 +597,7 @@
                       <span>🌐</span> Parcial Geometria Diferencial
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-400 group-hover:text-purple-100 mt-1">
-                      20 ejercicios en LaTeX • Renderizado matemático activo
+                      20 ejercicios en LaTeX • Guardado persistente garantizado
                     </p>
                   </div>
                   <span className="text-2xl text-purple-400 group-hover:text-white transition-transform">→</span>
