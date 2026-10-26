@@ -11,16 +11,66 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <!-- Babel Compiler -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- KaTeX CSS y JS para renderizado matemático -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     body { font-family: 'Inter', sans-serif; }
+    .katex-display { margin: 0.5em 0 !important; }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 min-h-screen font-sans">
   <div id="root"></div>
 
   <script type="text/babel">
-    const { useState, useEffect } = React;
+    const { useState, useEffect, useRef } = React;
+
+    // Componente para renderizar texto mezclado con LaTeX usando KaTeX
+    function MathText({ text }) {
+      const containerRef = useRef(null);
+
+      useEffect(() => {
+        if (!containerRef.current || !window.katex) return;
+
+        // Limpiar contenido previo
+        containerRef.current.innerHTML = "";
+
+        // Separar texto normal de bloques de fórmulas ($$ Bloque $$ y $ Inline $)
+        const regex = /(\$\$.*?\$\$|\$.*?\$)/gs;
+        const parts = text.split(regex);
+
+        parts.forEach(part => {
+          if (part.startsWith('$$') && part.endsWith('$$')) {
+            const math = part.slice(2, -2);
+            const span = document.createElement('div');
+            try {
+              window.katex.render(math, span, { displayMode: true, throwOnError: false });
+            } catch (e) {
+              span.textContent = part;
+            }
+            containerRef.current.appendChild(span);
+          } else if (part.startsWith('$') && part.endsWith('$')) {
+            const math = part.slice(1, -1);
+            const span = document.createElement('span');
+            try {
+              window.katex.render(math, span, { displayMode: false, throwOnError: false });
+            } catch (e) {
+              span.textContent = part;
+            }
+            containerRef.current.appendChild(span);
+          } else {
+            const span = document.createElement('span');
+            span.innerText = part;
+            containerRef.current.appendChild(span);
+          }
+        });
+      }, [text]);
+
+      return <div ref={containerRef} className="whitespace-pre-line leading-relaxed text-slate-800 font-serif font-medium" />;
+    }
 
     // ==========================================
     // DATOS DE PROBABILITATS (27 ejercicios)
@@ -40,17 +90,17 @@
           },
           { 
             id: "L0-E6", list: "Llista 0", num: "Ej. 6", title: "Eventos Equiprobables", desc: "Coincidencias en pisos/grupos con espacios muestrales discretos.",
-            statement: "Siete personas entran al ascensor en la planta baja de un edificio de 10 plantas. Supongamos que cada persona puede bajar del ascensor en cualquiera de los pisos (primero, segundo,..., décimo) con igual probabilidad. Calcula las probabilidades de los siguientes sucesos:\nA = Nadie baja en el primer o en el segundo piso.\nB = Exactamente tres personas bajan en el quinto piso.\nC = Cada persona baja en plantas diferentes.\nD = Todas bajan en el mismo piso.",
+            statement: "Siete personas entran al ascensor en la planta baja de un edificio de 10 plantas. Supongamos que cada persona puede bajar del ascensor en cualquiera de los pisos con igual probabilidad. Calcula las probabilidades de los siguientes sucesos:\n$A$ = Nadie baja en el primer o en el segundo piso.\n$B$ = Exactamente tres personas bajan en el quinto piso.\n$C$ = Cada persona baja en plantas diferentes.\n$D$ = Todas bajan en el mismo piso.",
             state: "pending", comment: "" 
           },
           { 
             id: "L0-E12", list: "Llista 0", num: "Ej. 12", title: "Problema de Chicago (Desarranjaments)", desc: "Emparejamientos y límites de n parejas cuando n -> inf.",
-            statement: "Problema de Chicago. Se organiza un baile y acuden n parejas reales. Una vez en el baile, los chicos y las chicas se emparejan al azar para bailar.\na) ¿Cuál es la probabilidad de que todas las parejas formadas sean reales?\nb) ¿Cuál es la probabilidad de que al menos una de las parejas formadas sea una pareja real?\n(a) ¿A qué converge esta probabilidad cuando el número de parejas n tiende a infinito?",
+            statement: "Problema de Chicago. Se organiza un baile y acuden $n$ parejas reales. Una vez en el baile, los chicos y las chicas se emparejan al azar para bailar.\na) ¿Cuál es la probabilidad de que todas las parejas formadas sean reales?\nb) ¿Cuál es la probabilidad de que al menos una de las parejas formadas sea una pareja real?\n(a) ¿A qué converge esta probabilidad cuando el número de parejas $n \\to \\infty$?",
             state: "pending", comment: "" 
           },
           { 
             id: "L0-E18", list: "Llista 0", num: "Ej. 18", title: "Muestreo Con vs Sin Reemplazo", desc: "Comparativa de modelos de extracción y tiempos de espera.",
-            statement: "Problema del borracho y las llaves. Un hombre tiene un llavero con n llaves de las cuales solo una abre la puerta de su casa. Llega borracho a casa y empieza a probar las llaves al azar. Calcula la probabilidad de que necesite probar k llaves si:\na) saca las llaves sin reposición.\nb) saca las llaves con reposición.",
+            statement: "Problema del borracho y las llaves. Un hombre tiene un llavero con $n$ llaves de las cuales solo una abre la puerta de su casa. Llega borracho a casa y empieza a probar las llaves al azar. Calcula la probabilidad de que necesite probar $k$ llaves si:\na) saca las llaves sin reposición.\nb) saca las llaves con reposición.",
             state: "pending", comment: "" 
           },
           { 
@@ -79,12 +129,12 @@
           },
           { 
             id: "L2-E4", list: "Llista 2", num: "Ej. 4", title: "Problema del Taxi y Testigo", desc: "Sesgo de la probabilidad base y Bayes con tasa de acierto.",
-            statement: "Un taxi se ve involucrado en un accidente con fuga durante la noche. Dos compañías de taxis, la Verde y la Azul, operan en la ciudad. El 85% de los taxis son verdes y el 15% azules. Un testigo identifica el taxi como azul. El tribunal comprueba la fiabilidad del testigo y concluye que identifica correctamente cada color el 80% de las veces y se equivoca el 20%. ¿Cuál es la probabilidad de que el taxi involucrado fuera azul sabiendo que el testigo lo ha identificado como azul?",
+            statement: "Un taxi se ve involucrado en un accidente con fuga durante la noche. Dos compañías de taxis, la Verde y la Azul, operan en la ciudad. El $85\\%$ de los taxis son verdes y el $15\\%$ azules. Un testigo identifica el taxi como azul. El tribunal comprueba la fiabilidad del testigo y concluye que identifica correctamente cada color el $80\\%$ de las veces y se equivoca el $20\\%$. ¿Cuál es la probabilidad de que el taxi involucrado fuera azul sabiendo que el testigo lo ha identificado como azul?",
             state: "pending", comment: "" 
           },
           { 
             id: "L2-E5", list: "Llista 2", num: "Ej. 5", title: "Doble Test Diagnóstico", desc: "Independencia condicionada al estado de salud del paciente.",
-            statement: "Un test para detectar anticuerpos de un virus tiene probabilidad 0,99 de dar el resultado correcto. Los pacientes que dan positivo son sometidos a un segundo test más preciso que no falla en pacientes sanos pero tiene un 1% de error en infectados. Los dos tests son independientes dado el estado del paciente. La prevalencia es de 0,1.\n1. ¿Qué proporción de pacientes serán sometidos a un segundo test?\n2. ¿Qué proporción de pacientes serán sometidos a un segundo test y este saldrá negativo?\n3. ¿Cuál es la probabilidad de que un paciente del apartado anterior esté realmente infectado?",
+            statement: "Un test para detectar anticuerpos de un virus tiene probabilidad $0{,}99$ de dar el resultado correcto. Los pacientes que dan positivo son sometidos a un segundo test más preciso que no falla en pacientes sanos pero tiene un $1\\%$ de error en infectados. Los dos tests son independientes dado el estado del paciente. La prevalencia es de $0{,}1$.\n1. ¿Qué proporción de pacientes serán sometidos a un segundo test?\n2. ¿Qué proporción de pacientes serán sometidos a un segundo test y este saldrá negativo?\n3. ¿Cuál es la probabilidad de que un paciente del apartado anterior esté realmente infectado?",
             state: "pending", comment: "" 
           },
           { 
@@ -94,17 +144,17 @@
           },
           { 
             id: "L3-E3", list: "Llista 3", num: "Ej. 3", title: "Modelo de Urnas de Polya", desc: "Invariancia de probabilidades al añadir bolas por inducción.",
-            statement: "Una urna tiene b bolas blancas y n negras. Sacamos una bola al azar, la retornamos y añadimos a bolas del mismo color. Repetimos tres veces.\na) Calcula la probabilidad de que la primera bola haya salido blanca, si sabemos que la segunda ha salido blanca.\nb) Demuestra que en las tres extracciones la probabilidad de sacar una bola blanca es la misma.",
+            statement: "Una urna tiene $b$ bolas blancas y $n$ negras. Sacamos una bola al azar, la retornamos y añadimos $a$ bolas del mismo color. Repetimos tres veces.\na) Calcula la probabilidad de que la primera bola haya salido blanca, si sabemos que la segunda ha salido blanca.\nb) Demuestra que en las tres extracciones la probabilidad de sacar una bola blanca es la misma.",
             state: "pending", comment: "" 
           },
           { 
             id: "L3-E4", list: "Llista 3", num: "Ej. 4", title: "Proceso de Selección en 2 Etapas", desc: "Dado previo para elección de urna y tiradas posteriores.",
-            statement: "Se lanza un dado perfecto. Si sale 2, 3, 4, 5 o 6, se escribe dicho número. Si sale 1, se vuelve a lanzar: si sale 1, 2 o 3 se escribe dicho número, pero si sale 4, 5 o 6 se escribe 7.\nTenemos 7 dados, D1,..., D7 (el dado Di tiene i-1 caras blancas y 7-i negras). Escogemos el dado Di según el número escrito y lo tiramos n veces.\na) Calcula la probabilidad de que salga cara negra en la primera tirada.\nb) Calcula la probabilidad de que haya salido cara negra en la primera tirada si en la segunda ha salido cara negra.\nc) Calcula la probabilidad de sacar cara negra en la tercera tirada si en las dos primeras ha salido negra.\nd) Calcula la probabilidad de sacar cara negra en la tirada n si en las n-1 anteriores ha salido negra. Encuentra el límite cuando n -> inf.",
+            statement: "Se lanza un dado perfecto. Si sale 2, 3, 4, 5 o 6, se escribe dicho número. Si sale 1, se vuelve a lanzar: si sale 1, 2 o 3 se escribe dicho número, pero si sale 4, 5 o 6 se escribe 7.\nTenemos 7 dados, $D_1, \\dots, D_7$ (el dado $D_i$ tiene $i-1$ caras blancas y $7-i$ negras). Escogemos el dado $D_i$ según el número escrito y lo tiramos $n$ veces.\na) Calcula la probabilidad de que salga cara negra en la primera tirada.\nb) Calcula la probabilidad de que haya salido cara negra en la primera tirada si en la segunda ha salido cara negra.\nc) Calcula la probabilidad de sacar cara negra en la tercera tirada si en las dos primeras ha salido negra.\nd) Calcula la probabilidad de sacar cara negra en la tirada $n$ si en las $n-1$ anteriores ha salido negra. Encuentra el límite cuando $n \\to \\infty$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L3-E5", list: "Llista 3", num: "Ej. 5", title: "Elección entre n+1 Urnas", desc: "Extracción múltiple sin reemplazo y sumatorios combinatorios.",
-            statement: "Tenemos n + 1 urnas idénticas con n (n >= 3) bolas cada una. En la primera urna hay n bolas negras, en la segunda n-1 negras y 1 blanca, y así sucesivamente. Se escoge una urna al azar y se sacan 3 bolas de golpe.\na) Demuestra que la probabilidad de que las tres bolas sean blancas es 1/4.\nb) Suponiendo que las tres bolas son blancas, calcula el número de urnas para que haya probabilidad 2/3 de que provengan de las dos últimas urnas.",
+            statement: "Tenemos $n + 1$ urnas idénticas con $n$ ($n \\ge 3$) bolas cada una. En la primera urna hay $n$ bolas negras, en la segunda $n-1$ negras y 1 blanca, y así sucesivamente. Se escoge una urna al azar y se sacan 3 bolas de golpe.\na) Demuestra que la probabilidad de que las tres bolas sean blancas es $\\frac{1}{4}$.\nb) Suponiendo que las tres bolas son blancas, calcula el número de urnas para que haya probabilidad $\\frac{2}{3}$ de que provengan de las dos últimas urnas.",
             state: "pending", comment: "" 
           }
         ]
@@ -118,27 +168,27 @@
         exercises: [
           { 
             id: "L4-E1", list: "Llista 4", num: "Ej. 1", title: "Construcción de Espacio y PMF", desc: "Monedas seguidas, pmf de X y transformación Y = g(X).",
-            statement: "Consideramos una sucesión de tres tiradas de una moneda perfecta. Sea X el número de caras seguidas.\n(1) Explicita los sucesos {X = x} y {X <= x}, para todos los casos de x in R.\n(2) Da la función de masa de probabilidad (pmf) de X.\n(3) Da la función de distribución de probabilidad (cdf) de X.\n(4) Encuentra la función de distribución de probabilidad (cdf) de Y = X^2 - 4X + 3.\n(5) ¿Cuáles son los sucesos {X <= 2.75}, {0.5 <= X <= 1.72}?",
+            statement: "Consideramos una sucesión de tres tiradas de una moneda perfecta. Sea $X$ el número de caras seguidas.\n(1) Explicita los sucesos $\\{X = x\\}$ y $\\{X \\le x\\}$, para todos los casos de $x \\in \\mathbb{R}$.\n(2) Da la función de masa de probabilidad (pmf) de $X$.\n(3) Da la función de distribución de probabilidad (cdf) de $X$.\n(4) Encuentra la función de distribución de probabilidad (cdf) de $Y = X^2 - 4X + 3$.\n(5) ¿Cuáles son los sucesos $\\{X \\le 2{,}75\\}$, $\\{0{,}5 \\le X \\le 1{,}72\\}$?",
             state: "pending", comment: "" 
           },
           { 
             id: "L4-E3", list: "Llista 4", num: "Ej. 3", title: "Suma de Dados y Soporte", desc: "Identificación rigurosa del evento {X=k} en tiradas múltiples.",
-            statement: "Lanzamos un dado cinco veces. Sea X la suma de los valores obtenidos. Escribe los sucesos:\n{X = 4}\n{X = 6}\n{X = 30}\n{X >= 29}",
+            statement: "Lanzamos un dado cinco veces. Sea $X$ la suma de los valores obtenidos. Escribe los sucesos:\n$\\{X = 4\\}$\n$\\{X = 6\\}$\n$\\{X = 30\\}$\n$\\{X \\ge 29\\}$",
             state: "pending", comment: "" 
           },
           { 
             id: "L5-E1", list: "Llista 5", num: "Ej. 1", title: "Máximo de Geométricas", desc: "Modelización de Z = max(X, Y) con variables independientes.",
-            statement: "Dos dados perfectos se lanzan por separado diferentes veces. Sea X el número de lanzamientos hasta obtener un 1 en el primer dado, y Y el número de lanzamientos en el segundo para obtener un 5 o un 6.\n(1) ¿Cuál es la ley de X? ¿y la de Y?\n(2) Calcula la ley de Z = max(X, Y).\n(3) Calcula P(X = Z).",
+            statement: "Dos dados perfectos se lanzan por separado diferentes veces. Sea $X$ el número de lanzamientos hasta obtener un 1 en el primer dado, y $Y$ el número de lanzamientos en el segundo para obtener un 5 o un 6.\n(1) ¿Cuál es la ley de $X$? ¿y la de $Y$?\n(2) Calcula la ley de $Z = \\max(X, Y)$.\n(3) Calcula $P(X = Z)$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L5-E2", list: "Llista 5", num: "Ej. 2", title: "Binomial con Errores", desc: "Clasificación con probabilidad de error y probabilidad total.",
-            statement: "Una máquina de fabricar botellas tiene probabilidad 0.1 de producir una botella defectuosa. Fabricando n = 10 botellas al día, las buenas se clasifican correctamente, pero una defectuosa se clasifica mal con probabilidad 0.1. Sea X el número de botellas clasificadas como defectuosas.\n(1) Obtén una expresión para P{X = k}, para k in [0, n] cap N.\n(2) Calcula P{X = 3} y P{X > 3}.",
+            statement: "Una máquina de fabricar botellas tiene probabilidad $0{,}1$ de producir una botella defectuosa. Fabricando $n = 10$ botellas al día, las buenas se clasifican correctamente, pero una defectuosa se clasifica mal con probabilidad $0{,}1$. Sea $X$ el número de botellas clasificadas como defectuosas.\n(1) Obtén una expresión para $P\\{X = k\\}$, para $k \\in [0, n] \\cap \\mathbb{N}$.\n(2) Calcula $P\\{X = 3\\}$ y $P\\{X > 3\\}$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L5-E4", list: "Llista 5", num: "Ej. 4", title: "Uniforme Discreta y Truncamiento", desc: "Transformación lineal y corte inferior mediante max(2, X).",
-            statement: "Sea X una v.a. discreta uniformemente distribuida en {1, ..., m}, para m >= 2.\n(1) Encuentra la pmf y la cdf de X.\n(2) Calcula P({X par}).\n(3) Fijadas a > 0 y b, determina la cdf de Y = aX + b. ¿Qué pasa si a no es estrictamente positiva?\n(4) Si m > 2, determina la ley de Z = max{2, X}.",
+            statement: "Sea $X$ una v.a. discreta uniformemente distribuida en $\\{1, \\dots, m\\}$, para $m \\ge 2$.\n(1) Encuentra la pmf y la cdf de $X$.\n(2) Calcula $P(\\{X \\text{ par}\\})$.\n(3) Fijadas $a > 0$ y $b$, determina la cdf de $Y = aX + b$. ¿Qué pasa si $a$ no es estrictamente positiva?\n(4) Si $m > 2$, determina la ley de $Z = \\max\\{2, X\\}$.",
             state: "pending", comment: "" 
           }
         ]
@@ -152,32 +202,32 @@
         exercises: [
           { 
             id: "L4-E2", list: "Llista 4", num: "Ej. 2", title: "CDF Mixta por Tramos", desc: "Cálculo de P(X in A) en funciones con saltos y tramos continuos.",
-            statement: "Sea X una v.a. con función de distribución:\nF(x) = 0, si x < -1\nF(x) = (1+x)/9, si -1 <= x < 0\nF(x) = (2+x)/9, si 0 <= x < 2\nF(x) = 1, si 2 <= x\nCalcula:\n(a) P(X = 2)\n(b) P(X in [1/2, 3))\n(c) P(X = 2 | X in [1/2, 3))\n(d) P(X in (-1, 0] u (1, 2])\n(e) P(X in ((-1, 2] n (1, 3)))\n(f) P(X in {x in R : |x| + 2x^2 > 3})",
+            statement: "Sea $X$ una v.a. con función de distribución:\n$$F(x) = \\begin{cases} 0, & \\text{si } x < -1 \\\\ \\frac{1+x}{9}, & \\text{si } -1 \\le x < 0 \\\\ \\frac{2+x}{9}, & \\text{si } 0 \\le x < 2 \\\\ 1, & \\text{si } 2 \\le x \\end{cases}$$\nCalcula:\n(a) $P(X = 2)$\n(b) $P(X \\in [1/2, 3))$\n(c) $P(X = 2 \\mid X \\in [1/2, 3))$\n(d) $P(X \\in (-1, 0] \\cup (1, 2])$\n(e) $P(X \\in ((-1, 2] \\cap (1, 3)))$\n(f) $P(X \\in \\{x \\in \\mathbb{R} : |x| + 2x^2 > 3\\})$",
             state: "pending", comment: "" 
           },
           { 
             id: "L4-E5", list: "Llista 4", num: "Ej. 5", title: "Distribución del Máximo Muestral", desc: "Extracción de n bolas con reemplazo y estudio de Gn(t).",
-            statement: "Una urna contiene bolas numeradas del 1 a m. Sea X la variable aleatoria que indica el número más grande que se obtiene en n extracciones aleatorias con sustitución (independientes). Estudia la distribución de X.",
+            statement: "Una urna contiene bolas numeradas del 1 a $m$. Sea $X$ la variable aleatoria que indica el número más grande que se obtiene en $n$ extracciones aleatorias con sustitución (independientes). Estudia la distribución de $X$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L5-E5", list: "Llista 5", num: "Ej. 5", title: "Propiedades de la CDF", desc: "Verificación de condiciones de monotonía y límites en R.",
-            statement: "Considera la función definida por:\nF(x) = 0, x < -1\nF(x) = (1/8)(x + 1), -1 <= x < 1\nF(x) = x / (x + 1), 1 <= x\nComprueba que es una cdf. Para X ~ F, calcula:\n(a) P(X = 1)\n(b) P(X = 1/2)\n(c) P(-2 <= X < 0)\n(d) P(X <= 1 | X >= 0)\n(e) P({x in R : 2|x| + 3x^2 > 1})",
+            statement: "Considera la función definida por:\n$$F(x) = \\begin{cases} 0, & x < -1 \\\\ \\frac{1}{8}(x + 1), & -1 \\le x < 1 \\\\ \\frac{x}{x + 1}, & 1 \\le x \\end{cases}$$\nComprueba que es una cdf. Para $X \\sim F$, calcula:\n(a) $P(X = 1)$\n(b) $P(X = 1/2)$\n(c) $P(-2 \\le X < 0)$\n(d) $P(X \\le 1 \\mid X \\ge 0)$\n(e) $P(\\{x \\in \\mathbb{R} : 2|x| + 3x^2 > 1\\})$",
             state: "pending", comment: "" 
           },
           { 
             id: "L5-E6", list: "Llista 5", num: "Ej. 6", title: "Parámetros y Continuidad", desc: "Ajuste de a, b para asegurar CDF continua y densidad de Y = X^2.",
-            statement: "Considera la función definida por:\nFX(x) = 0, x < 0\nFX(x) = a*x^2 + b, 0 <= x < 1\nFX(x) = 1 - e^(-x), x >= 1\n(a) Determina las condiciones para que FX sea una función de distribución de probabilidad.\n(b) Calcula a, b para que FX sea continua.\n(c) Con los valores de (b), calcula P(X >= 1) y P(-1/2 <= X < 1/2).\n(d) Encuentra la función de distribución de Y = X^2.",
+            statement: "Considera la función definida por:\n$$F_X(x) = \\begin{cases} 0, & x < 0 \\\\ ax^2 + b, & 0 \\le x < 1 \\\\ 1 - e^{-x}, & x \\ge 1 \\end{cases}$$\n(a) Determina las condiciones para que $F_X$ sea una función de distribución de probabilidad.\n(b) Calcula $a, b$ para que $F_X$ sea continua.\n(c) Con los valores de (b), calcula $P(X \\ge 1)$ y $P(-1/2 \\le X < 1/2)$.\n(d) Encuentra la función de distribución de $Y = X^2$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L6-E3", list: "Llista 6", num: "Ej. 3", title: "Probabilidad de Regiones Absolutas", desc: "Evaluación de P(|X-2| + |X| <= 4) mediante la CDF.",
-            statement: "Sea X una v.a. con función de distribución:\nF(x) = (1/2)*x^2, si x < 1\nF(x) = (1/4)*x + 3/4, si 1 <= x < 1 (o tramo discontinuo indicado)\nF(x) = 1, si 1 <= x\n(1) Calcula P(|X - 2| + |X| <= 4).\n(2) Encuentra la función de distribución de Y = X^2.",
+            statement: "Sea $X$ una v.a. con función de distribución:\n$$F(x) = \\begin{cases} \\frac{1}{2}x^2, & \\text{si } x < 1 \\\\ \\frac{1}{4}x + \\frac{3}{4}, & \\text{si } 1 \\le x < 2 \\\\ 1, & \\text{si } 2 \\le x \\end{cases}$$\n(1) Calcula $P(|X - 2| + |X| \\le 4)$.\n(2) Encuentra la función de distribución de $Y = X^2$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L0-E20", list: "Llista 0", num: "Ej. 20", title: "Problema de los Sobres/Cupones", desc: "Conexión de distribuciones acumuladas con conteo general.",
-            statement: "Un grupo de estudiantes regala sobres numerados del 1 al 20 uniformemente repartidos. La persona que reúna todos los números gana una entrada. Calcula la probabilidad de que comprando k productos tengamos todos los números.",
+            statement: "Un grupo de estudiantes regala sobres numerados del 1 al 20 uniformemente repartidos. La persona que reúna todos los números gana una entrada. Calcula la probabilidad de que comprando $k$ productos tengamos todos los números.",
             state: "pending", comment: "" 
           }
         ]
@@ -191,32 +241,32 @@
         exercises: [
           { 
             id: "L6-E1", list: "Llista 6", num: "Ej. 1", title: "Estudio Completo de PDF", desc: "Integral, CDF, E[X], Var(X) y variable mixta min(X, 2).",
-            statement: "Dada la función f definida por:\nf(x) = x, si 0 < x < 1\nf(x) = x - 2, si 2 <= x < 3\nf(x) = 0, en otro caso\n(1) Comprueba que es una pdf. Dibújala.\n(2) Encuentra la cdf de X y dibújala.\n(3) Calcula P(1 <= X <= 5/2 | X > 1/2).\n(4) Calcula E(X) y var(X).\n(5) Para Y = min{X, 2}, encuentra su cdf. ¿Es absolutamente continua? Calcula P(Y = 2).",
+            statement: "Dada la función $f$ definida por:\n$$f(x) = \\begin{cases} x, & \\text{si } 0 < x < 1 \\\\ x - 2, & \\text{si } 2 \\le x < 3 \\\\ 0, & \\text{en otro caso} \\end{cases}$$\n(1) Comprueba que es una pdf. Dibújala.\n(2) Encuentra la cdf de $X$ y dibújala.\n(3) Calcula $P(1 \\le X \\le 5/2 \\mid X > 1/2)$.\n(4) Calcula $E(X)$ y $\\text{var}(X)$.\n(5) Para $Y = \\min\\{X, 2\\}$, encuentra su cdf. ¿Es absolutamente continua? Calcula $P(Y = 2)$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L6-E2", list: "Llista 6", num: "Ej. 2", title: "Cambio de Variable Continuo y Discreto", desc: "Densidad de Y = X^2 + 1 y variable discreta Z = floor(2X).",
-            statement: "Dados a, b in R, consideramos f(x) = ax^3 + b si x in [0, 1] y 0 en otro caso.\n(1) ¿Para qué pares (a, b) es f una pdf?\n(2) Para b = 3/4, encuentra la cdf de X.\n(3) Encuentra la pdf de Y = X^2 + 1.\n(4) Encuentra la ley de Z = ⌊2X⌋.",
+            statement: "Dados $a, b \\in \\mathbb{R}$, consideramos $f(x) = ax^3 + b$ si $x \\in [0, 1]$ y $0$ en otro caso.\n(1) ¿Para qué pares $(a, b)$ es $f$ una pdf?\n(2) Para $b = 3/4$, encuentra la cdf de $X$.\n(3) Encuentra la pdf de $Y = X^2 + 1$.\n(4) Encuentra la ley de $Z = \\lfloor 2X \\rfloor$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L6-E4", list: "Llista 6", num: "Ej. 4", title: "Distribución Gamma y Momentos", desc: "Integración con función Gamma de Euler y Normal al cuadrado.",
-            statement: "Para X ~ Gamma(alpha, beta) con pdf f(x) = (beta^alpha / Gamma(alpha)) * x^(alpha-1) * e^(-beta*x) (x >= 0):\n(1) Demuestra que Gamma(t+1) = t*Gamma(t) y Gamma(a) = (a-1)! para a in N.\n(2) Calcula los momentos E(X^k), E(X) y var(X).\n(3) Si X ~ N(0, 1), comprueba que Y = X^2 ~ Gamma(1/2, 1/2) y deduce que Gamma(1/2) = sqrt(pi).",
+            statement: "Para $X \\sim \\text{Gamma}(\\alpha, \\beta)$ con pdf $$f(x) = \\frac{\\beta^\\alpha}{\\Gamma(\\alpha)} x^{\\alpha-1} e^{-\\beta x} \\quad (x \\ge 0):$$\n(1) Demuestra que $\\Gamma(t+1) = t\\Gamma(t)$ y $\\Gamma(a) = (a-1)!$ para $a \\in \\mathbb{N}$.\n(2) Calcula los momentos $E(X^k)$, $E(X)$ y $\\text{var}(X)$.\n(3) Si $X \\sim \\mathcal{N}(0, 1)$, comprueba que $Y = X^2 \\sim \\text{Gamma}(1/2, 1/2)$ y deduce que $\\Gamma(1/2) = \\sqrt{\\pi}$.",
             state: "pending", comment: "" 
           },
           { 
             id: "L6-E5", list: "Llista 6", num: "Ej. 5", title: "Distribución de Cauchy e Inversa", desc: "Inexistencia de esperanza y simetría de Y = 1/X.",
-            statement: "Sea X ~ Cauchy(0, 1) con pdf f(x) = 1 / (pi * (1 + x^2)).\n(1) Comprueba que f es una pdf.\n(2) Calcula su cdf.\n(3) Demuestra que no existe la esperanza de X.\n(4) Demuestra que Y = 1/X también es Cauchy.",
+            statement: "Sea $X \\sim \\text{Cauchy}(0, 1)$ con pdf $$f(x) = \\frac{1}{\\pi (1 + x^2)}.$$\n(1) Comprueba que $f$ es una pdf.\n(2) Calcula su cdf.\n(3) Demuestra que no existe la esperanza de $X$.\n(4) Demuestra que $Y = 1/X$ también es Cauchy.",
             state: "pending", comment: "" 
           },
           { 
             id: "L0-E22", list: "Llista 0", num: "Ej. 22", title: "Integración de Sistemas e Informática", desc: "Densidades continuas aplicadas a detección de fallos.",
-            statement: "Un ordenador tiene probabilidad 0.2 de tener un virus. Si lo tiene, la probabilidad de que el antivirus lo detecte es 0.9. Si no lo tiene, da falsa alarma con probabilidad 0.02. Calcula:\na) Probabilidad de que, si ha aparecido mensaje de virus, el ordenador NO tenga virus.\nb) Probabilidad de que tenga virus y el antivirus NO lo detecte.\nc) Probabilidad de que, si no ha salido mensaje, el ordenador tenga virus.",
+            statement: "Un ordenador tiene probabilidad $0{,}2$ de tener un virus. Si lo tiene, la probabilidad de que el antivirus lo detecte es $0{,}9$. Si no lo tiene, da falsa alarma con probabilidad $0{,}02$. Calcula:\na) Probabilidad de que, si ha aparecido mensaje de virus, el ordenador NO tenga virus.\nb) Probabilidad de que tenga virus y el antivirus NO lo detecte.\nc) Probabilidad de que, si no ha salido mensaje, el ordenador tenga virus.",
             state: "pending", comment: "" 
           },
           { 
             id: "L0-E28", list: "Llista 0", num: "Ej. 28", title: "Combinación de 3 Tests Independientes", desc: "Probabilidades a priori de población con diagnósticos continuos.",
-            statement: "Tenemos 3 tests independientes para una enfermedad (probabilidad 0.9 de positivo si está enfermo, 0.2 de falso positivo si está sano). Prevalencia del 20%. Un individuo pasa los 3 tests.\na) Probabilidad de que algún test salga positivo.\nb) Si algún test sale positivo, probabilidad de estar enfermo.\nc) Si los 3 tests dan positivo, probabilidad de estar enfermo.",
+            statement: "Tenemos 3 tests independientes para una enfermedad (probabilidad $0{,}9$ de positivo si está enfermo, $0{,}2$ de falso positivo si está sano). Prevalencia del $20\\%$. Un individuo pasa los 3 tests.\na) Probabilidad de que algún test salga positivo.\nb) Si algún test sale positivo, probabilidad de estar enfermo.\nc) Si los 3 tests dan positivo, probabilidad de estar enfermo.",
             state: "pending", comment: "" 
           }
         ]
@@ -224,7 +274,7 @@
     ];
 
     // ==========================================
-    // DATOS DE GEOMETRIA DIFERENCIAL (20 ejercicios)
+    // DATOS DE GEOMETRIA DIFERENCIAL (20 ejercicios con LaTeX)
     // ==========================================
     const GEO_BLOCKS = [
       {
@@ -236,22 +286,22 @@
         exercises: [
           {
             id: "L1-E2i", list: "Llista 1 (Corbes)", num: "Ej. 2(i)", title: "Logaritmo: Regularidad y Longitud", desc: "Estudio de α(t) = (t, log t) e integración por cambio de variable.",
-            statement: "Determina si la curva α(t) = (t, log t) para t ∈ (0, ∞) es 1-regular y halla su longitud de arco entre los puntos 1 y x.\n\nSugerencia: para calcular la integral ∫ √(1+t²)/t dt es útil realizar el cambio de variable s = √(1+t²).",
+            statement: "Determina si la curva $\\alpha(t) = (t, \\log t)$ para $t \\in (0, \\infty)$ es $1$-regular y halla su longitud de arco entre los puntos $1$ y $x$.\n\nSugerencia: para calcular la integral $$\\int \\frac{\\sqrt{1+t^2}}{t} dt$$ es útil realizar el cambio de variable $s = \\sqrt{1+t^2}$.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E2ii", list: "Llista 1 (Corbes)", num: "Ej. 2(ii)", title: "La Catenaria: Regularidad y Longitud", desc: "Estudio de α(t) = (t, a cosh(t/a)) usando identidades hiperbólicas.",
-            statement: "Determina si la curva α(t) = (t, a cosh(t/a)), para t ∈ ℝ entre 0 y x (donde a > 0), es 1-regular y halla su longitud de arco entre dichos puntos.",
+            statement: "Determina si la curva $\\alpha(t) = \\left(t, a \\cosh\\frac{t}{a}\\right)$, para $t \\in \\mathbb{R}$ entre $0$ y $x$ (donde $a > 0$), es $1$-regular y halla su longitud de arco entre dichos puntos.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E3", list: "Llista 1 (Corbes)", num: "Ej. 3", title: "Igualdad de Trazas y Reparametrización", desc: "Circunferencia vs. Parametrización Racional (Ángulo Mitad).",
-            statement: "Demuestra que las curvas parametrizadas:\nα(θ) = (cos θ, sin θ),  -π < θ < π\nβ(t) = ( (1-t²)/(1+t²),  2t/(1+t²) ),  -∞ < t < +∞\n\ntienen la misma traza. Demuestra que son equivalentes por reparametrización encontrando una función de cambio de parámetro entre θ y t.",
+            statement: "Demuestra que las curvas parametrizadas:\n$$\\alpha(\\theta) = (\\cos \\theta, \\sin \\theta), \\quad -\\pi < \\theta < \\pi$$\n$$\\beta(t) = \\left( \\frac{1-t^2}{1+t^2}, \\frac{2t}{1+t^2} \\right), \\quad -\\infty < t < +\\infty$$\n\ntienen la misma traza. Demuestra que son equivalentes por reparametrización encontrando una función de cambio de parámetro entre $\\theta$ y $t$.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E5", list: "Llista 1 (Corbes)", num: "Ej. 5", title: "La Cicloide: Puntos Singulares y Arco", desc: "Estudio de α(t) = (a(t - sin t), a(1 - cos t)).",
-            statement: "Dada la cicloide α(t) = (a(t - sin t), a(1 - cos t)):\n(1) Determina los puntos 1-regulares de α.\n(2) Determina la función longitud de arco de la cicloide.",
+            statement: "Dada la cicloide $\\alpha(t) = (a(t - \\sin t), a(1 - \\cos t))$:\n(1) Determina los puntos $1$-regulares de $\\alpha$.\n(2) Determina la función longitud de arco de la cicloide.",
             state: "pending", comment: ""
           }
         ]
@@ -265,22 +315,22 @@
         exercises: [
           {
             id: "L1-E11", list: "Llista 1 (Corbes)", num: "Ej. 11", title: "Cálculo de Frenet, Curvatura y Torsión", desc: "Estudio explícito de α(t) = (e^t, e^-t, t) en t = 0.",
-            statement: "Dada la curva α(t) = (e^t, e^-t, t):\n\nHalla el triedro de Frenet {T, N, B}, la curvatura κ y la torsión τ en el punto t = 0.",
+            statement: "Dada la curva $\\alpha(t) = (e^t, e^{-t}, t)$:\n\nHalla el triedro de Frenet $\\{T, N, B\\}$, la curvatura $\\kappa$ y la torsión $\\tau$ en el punto $t = 0$.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E12", list: "Llista 1 (Corbes)", num: "Ej. 12(1)", title: "Curva Cúbica del Espacio", desc: "Triedro y geometría local de α(t) = (t, t², t³) en t = 1.",
-            statement: "Dada la curva α(t) = (t, t², t³):\n(1) Halla el triedro de Frenet, la curvatura y la torsión en el punto t = 1.\n(2) Prueba que si un punto se encuentra en la intersección de los planos osculadores por tres puntos diferentes de la curva, este punto no se puede encontrar sobre la tangente de ninguno de los tres puntos.",
+            statement: "Dada la curva $\\alpha(t) = (t, t^2, t^3)$:\n(1) Halla el triedro de Frenet, la curvatura y la torsión en el punto $t = 1$.\n(2) Prueba que si un punto se encuentra en la intersección de los planos osculadores por tres puntos diferentes de la curva, este punto no se puede encontrar sobre la tangente de ninguno de los tres puntos.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E13", list: "Llista 1 (Corbes)", num: "Ej. 13", title: "Criterio de Planaridad y Plano Contenedor", desc: "Comprobación de τ = 0 y obtención del plano π.",
-            statement: "Calcula la torsión de la curva α(t) = (t, (1+t)/t, (1-t²)/t). Demuestra que la traza de α está contenida en un plano, y halla dicho plano.",
+            statement: "Calcula la torsión de la curva $\\alpha(t) = \\left(t, \\frac{1+t}{t}, \\frac{1-t^2}{t}\\right)$. Demuestra que la traza de $\\alpha$ está contenida en un plano, y halla dicho plano.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E16", list: "Llista 1 (Corbes)", num: "Ej. 16", title: "Indicatriz de las Tangentes", desc: "Fórmulas de κ₁ y τ₁ para α₁(s) = α'(s) y relación τ/κ.",
-            statement: "Sea α(s) una curva 2-regular parametrizada por el arco, y sea α₁(s) = α'(s).\n\nPrueba que la curvatura κ₁ y la torsión τ₁ de la curva α₁ se expresan en función de la curvatura κ y la torsión τ de α mediante las fórmulas:\nκ₁² = (κ² + τ²)/κ²\nτ₁ = (τ'κ - κ'τ) / (κ(κ² + τ²))\n\nDeduce que α₁ es plana si y solo si la razón τ/κ es constante.",
+            statement: "Sea $\\alpha(s)$ una curva $2$-regular parametrizada por el arco, y sea $\\alpha_1(s) = \\alpha'(s)$.\n\nPrueba que la curvatura $\\kappa_1$ y la torsión $\\tau_1$ de la curva $\\alpha_1$ se expresan en función de la curvatura $\\kappa$ y la torsión $\\tau$ de $\\alpha$ mediante las fórmulas:\n$$\\kappa_1^2 = \\frac{\\kappa^2 + \\tau^2}{\\kappa^2}$$\n$$\\tau_1 = \\frac{\\tau'\\kappa - \\kappa'\\tau}{\\kappa(\\kappa^2 + \\tau^2)}$$\n\nDeduce que $\\alpha_1$ es plana si y solo si la razón $\\tau/\\kappa$ es constante.",
             state: "pending", comment: ""
           }
         ]
@@ -294,22 +344,22 @@
         exercises: [
           {
             id: "L1-E23", list: "Llista 1 (Corbes)", num: "Ej. 23", title: "Teorema de Lancret", desc: "Caracterización fundamental de las hélices generalizadas.",
-            statement: "Una curva que forma un ángulo constante con una dirección fija del espacio se denomina hélice generalizada. Prueba que, si α es una curva 2-regular, las siguientes propiedades son equivalentes (Teorema de Lancret):\n(i) α es una hélice generalizada.\n(ii) La razón τ/κ entre la torsión y la curvatura de α es constante.\n(iii) El vector de Darboux de α, w = τT + κB, es paralelo a una dirección fija.",
+            statement: "Una curva que forma un ángulo constante con una dirección fija del espacio se denomina hélice generalizada. Prueba que, si $\\alpha$ es una curva $2$-regular, las siguientes propiedades son equivalentes (Teorema de Lancret):\n(i) $\\alpha$ es una hélice generalizada.\n(ii) La razón $\\tau/\\kappa$ entre la torsión y la curvatura de $\\alpha$ es constante.\n(iii) El vector de Darboux de $\\alpha$, $w = \\tau T + \\kappa B$, es paralelo a una dirección fija.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E24ii", list: "Llista 1 (Corbes)", num: "Ej. 24(ii)", title: "Hélice Polinomial 1", desc: "Comprobación de α(t) = (3t, 3t², 2t³), eje y pendiente.",
-            statement: "Prueba que la curva α(t) = (3t, 3t², 2t³) es una hélice generalizada y halla su eje y su pendiente.",
+            statement: "Prueba que la curva $\\alpha(t) = (3t, 3t^2, 2t^3)$ es una hélice generalizada y halla su eje y su pendiente.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E24iv", list: "Llista 1 (Corbes)", num: "Ej. 24(iv)", title: "Hélice Polinomial 2", desc: "Comprobación de α(t) = (3t - t³, 3t², 3t + t³), eje y pendiente.",
-            statement: "Prueba que la curva α(t) = (3t - t³, 3t², 3t + t³) es una hélice generalizada y halla su eje y su pendiente.",
+            statement: "Prueba que la curva $\\alpha(t) = (3t - t^3, 3t^2, 3t + t^3)$ es una hélice generalizada y halla su eje y su pendiente.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E27", list: "Llista 1 (Corbes)", num: "Ej. 27", title: "Caracterización de Curvas Esféricas", desc: "Ecuación R² + (T R')² = a² para curvas en una esfera.",
-            statement: "Sea α una curva 2-regular parametrizada por el arco, con curvatura κ y torsión τ. Supongamos que ni κ' ni τ se anulan en ningún punto. Denotamos R = 1/κ y T = 1/τ.\n\nPrueba que la traza de α está contenida en una esfera de radio a si y solo si:\nR² + (T R')² = a²",
+            statement: "Sea $\\alpha$ una curva $2$-regular parametrizada por el arco, con curvatura $\\kappa$ y torsión $\\tau$. Supongamos que ni $\\kappa'$ ni $\\tau$ se anulan en ningún punto. Denotamos $R = 1/\\kappa$ y $T = 1/\\tau$.\n\nPrueba que la traza de $\\alpha$ está contenida en una esfera de radio $a$ si y solo si:\n$$R^2 + (T R')^2 = a^2$$",
             state: "pending", comment: ""
           }
         ]
@@ -323,32 +373,32 @@
         exercises: [
           {
             id: "L1-E34", list: "Llista 1 (Corbes)", num: "Ej. 34", title: "Proyección Ortogonal en el Plano Proyectado", desc: "Análisis de la curva proyectada Γ(s) sobre Π₀.",
-            statement: "Sea γ: I → ℝ³ una curva 2-regular parametrizada por el arco. Sea s₀ ∈ I y {t₀, n₀, b₀} su triedro de Frenet en s₀. Consideramos el plano Π₀ por γ(s₀) determinado por (t₀ + n₀)/√2 y (t₀ + b₀)/√2. Sea Γ(s) la proyección ortogonal de γ(s) sobre Π₀.\n(1) Prueba que existe ε > 0 tal que Γ(s) es 2-regular para s ∈ (s₀ - ε, s₀ + ε).\n(2) Halla la curvatura K(s₀) de Γ(s) en función de k(s₀).\n(3) Halla el triedro de Frenet de Γ en el punto Γ(s₀).\n(4) Halla la torsión T(s₀) de la curva Γ(s).",
+            statement: "Sea $\\gamma: I \\to \\mathbb{R}^3$ una curva $2$-regular parametrizada por el arco. Sea $s_0 \\in I$ y $\\{t_0, n_0, b_0\\}$ su triedro de Frenet en $s_0$. Consideramos el plano $\\Pi_0$ por $\\gamma(s_0)$ determinado por $\\frac{1}{\\sqrt{2}}(t_0 + n_0)$ y $\\frac{1}{\\sqrt{2}}(t_0 + b_0)$. Sea $\\Gamma(s)$ la proyección ortogonal de $\\gamma(s)$ sobre $\\Pi_0$.\n(1) Prueba que existe $\\varepsilon > 0$ tal que $\\Gamma(s)$ es $2$-regular para $s \\in (s_0 - \\varepsilon, s_0 + \\varepsilon)$.\n(2) Halla la curvatura $K(s_0)$ de $\\Gamma(s)$ en función de $k(s_0)$.\n(3) Halla el triedro de Frenet de $\\Gamma$ en el punto $\\Gamma(s_0)$.\n(4) Halla la torsión $T(s_0)$ de la curva $\\Gamma(s)$.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E35", list: "Llista 1 (Corbes)", num: "Ej. 35", title: "Examen de Noviembre de 2024", desc: "Análisis de α'', α''', ángulo θ(t) y constancia de la curvatura.",
-            statement: "Sea α: ℝ → ℝ³ una curva 2-regular parametrizada por el arco. Sean k y τ las funciones curvatura y torsión de α.\n(1) Escribe α'' y α''' en función del triedro de Frenet de α y de k, τ y sus derivadas.\n(2) Demuestra que, para todo t ∈ ℝ, α''(t) ≠ 0 y α'''(t) ≠ 0.\n(3) Sea θ(t) ∈ [0, π] el ángulo entre α''(t) y α'''(t). Expresa cos² θ(t) en términos de k, τ y sus derivadas.\n(4) Supongamos que θ(t) es constante, y sea λ = cos θ(0). Demuestra que se satisface (1 - λ²)(k')² ≥ λ²k⁴. Deduce que λ = 0 y que k es constante.",
+            statement: "Sea $\\alpha: \\mathbb{R} \\to \\mathbb{R}^3$ una curva $2$-regular parametrizada por el arco. Sean $k$ y $\\tau$ las funciones curvatura y torsión de $\\alpha$.\n(1) Escribe $\\alpha''$ y $\\alpha'''$ en función del triedro de Frenet de $\\alpha$ y de $k, \\tau$ y sus derivadas.\n(2) Demuestra que, para todo $t \\in \\mathbb{R}$, $\\alpha''(t) \\neq 0$ y $\\alpha'''(t) \\neq 0$.\n(3) Sea $\\theta(t) \\in [0, \\pi]$ el ángulo entre $\\alpha''(t)$ y $\\alpha'''(t)$. Expresa $\\cos^2 \\theta(t)$ en términos de $k, \\tau$ y sus derivadas.\n(4) Supongamos que $\\theta(t)$ es constante, y sea $\\lambda = \\cos \\theta(0)$. Demuestra que se satisface $$(1 - \\lambda^2)(k')^2 \\ge \\lambda^2 k^4.$$\nDeduce que $\\lambda = 0$ y que $k$ es constante.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E36", list: "Llista 1 (Corbes)", num: "Ej. 36", title: "Examen de Septiembre de 2005 (Evoluta)", desc: "Estudio de β(s) = α(s) + n(s) cuando κ = 1.",
-            statement: "Sea α(s) una curva regular parametrizada por el arco, con curvatura constante k = 1 y torsión τ ≠ 0. Sea β(s) la evoluta de α, descrita por los centros de curvatura: β(s) = α(s) + n(s).\n(1) Demuestra que β es una curva regular, halla su curvatura y su torsión.\n(2) Halla el triedro de Frenet de β y demuestra que la evoluta de β es α.",
+            statement: "Sea $\\alpha(s)$ una curva regular parametrizada por el arco, con curvatura constante $k = 1$ y torsión $\\tau \\neq 0$. Sea $\\beta(s)$ la evoluta de $\\alpha$, descrita por los centros de curvatura: $$\\beta(s) = \\alpha(s) + n(s)$$\n(1) Demuestra que $\\beta$ es una curva regular, halla su curvatura y su torsión.\n(2) Halla el triedro de Frenet de $\\beta$ y demuestra que la evoluta de $\\beta$ es $\\alpha$.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E37", list: "Llista 1 (Corbes)", num: "Ej. 37", title: "Examen de Enero de 2015 (Evoluta Plana)", desc: "Regularidad y longitud de arco de β(s) = α(s) + (1/k(s))n(s).",
-            statement: "Sea I ⊂ ℝ un intervalo abierto y α: I → ℝ² una curva parametrizada por el arco. Sea k: I → ℝ la curvatura de α (con k(s) ≠ 0). Definimos la evoluta β(s) = α(s) + (1/k(s))n(s).\n(1) Demuestra que β es una curva regular si y solo si k' no se anula en ningún punto.\n(2) Demuestra que el vector tangente unitario de β en s coincide con n(s).\n(3) Demuestra que la longitud de arco de la evoluta entre s₀ < s₁ es |1/k(s₁) - 1/k(s₀)|.",
+            statement: "Sea $I \\subset \\mathbb{R}$ un intervalo abierto y $\\alpha: I \\to \\mathbb{R}^2$ una curva parametrizada por el arco. Sea $k: I \\to \\mathbb{R}$ la curvatura de $\\alpha$ (con $k(s) \\neq 0$). Definimos la evoluta $$\\beta(s) = \\alpha(s) + \\frac{1}{k(s)} n(s)$$\n(1) Demuestra que $\\beta$ es una curva regular si y solo si $k'$ no se anula en ningún punto.\n(2) Demuestra que el vector tangente unitario de $\\beta$ en $s$ coincide con $n(s)$.\n(3) Demuestra que la longitud de arco de la evoluta entre $s_0 < s_1$ es $$\\left| \\frac{1}{k(s_1)} - \\frac{1}{k(s_0)} \\right|$$",
             state: "pending", comment: ""
           },
           {
             id: "L1-E40", list: "Llista 1 (Corbes)", num: "Ej. 40", title: "Examen de Enero de 2015 (Polinomios Vectoriales)", desc: "Límite asintótico de la curvatura para α(t) = ∑ t^k v_k.",
-            statement: "Sean v₀, ..., v_n ∈ ℝ³ con v_n ≠ 0. Definimos α(t) = ∑_{k=0}^n t^k v_k. Supongamos que α es 2-regular.\n(1) Demuestra que existe algún i ∈ {0, ..., n-1} tal que v_i y v_n son linealmente independientes.\n(2) Sea m ∈ {0, ..., n-1} el mayor entero tal que v_m y v_n son l.i. Demuestra que existe u ≠ 0 con lim_{t->∞} (α'(t) ∧ α''(t)) / t^(m+n-3) = u.\n(3) Demuestra que lim_{t->∞} <α'(t), α'(t)> / t^(2n-2) = n² ||v_n||².\n(4) Sea k la función curvatura. Demuestra que lim_{t->∞} k(t) = 0.",
+            statement: "Sean $v_0, \\dots, v_n \\in \\mathbb{R}^3$ con $v_n \\neq 0$. Definimos $\\alpha(t) = \\sum_{k=0}^n t^k v_k$. Supongamos que $\\alpha$ es $2$-regular.\n(1) Demuestra que existe algún $i \\in \\{0, \\dots, n-1\\}$ tal que $v_i$ y $v_n$ son linealmente independientes.\n(2) Sea $m \\in \\{0, \\dots, n-1\\}$ el mayor entero tal que $v_m$ y $v_n$ son l.i. Demuestra que existe $u \\neq 0$ con $$\\lim_{t \\to \\infty} \\frac{\\alpha'(t) \\wedge \\alpha''(t)}{t^{m+n-3}} = u$$\n(3) Demuestra que $$\\lim_{t \\to \\infty} \\frac{\\langle \\alpha'(t), \\alpha'(t) \\rangle}{t^{2n-2}} = n^2 \\|v_n\\|^2$$\n(4) Sea $k$ la función curvatura. Demuestra que $\\lim_{t \\to \\infty} k(t) = 0$.",
             state: "pending", comment: ""
           },
           {
             id: "L1-E41", list: "Llista 1 (Corbes)", num: "Ej. 41", title: "Propiedades de Curvas en la Esfera", desc: "Condiciones sobre <α, t>, <α, n> y cota de curvatura k ≥ r⁻¹.",
-            statement: "Sea α: I → ℝ³ una curva 2-regular en la esfera <α(s), α(s)> = r² (r > 0).\n(1) Demuestra que <α(s), t(s)> = 0 para todo s.\n(2) Demuestra que 1 + k(s)<α(s), n(s)> = 0 para todo s.\n(3) Demuestra que k(s) ≥ r⁻¹ para todo s.\n(4) Demuestra que si k(s) = r⁻¹ entonces n(s) = -α(s)/r.\n(5) Demuestra que si k(s) ≠ r⁻¹ entonces el vector binormal satisface <α(s), b(s)> ≠ 0.\n(6) Deduce que si la curvatura de α es constante, entonces la traça de α está contenida en una circunferencia.",
+            statement: "Sea $\\alpha: I \\to \\mathbb{R}^3$ una curva $2$-regular en la esfera $\\langle \\alpha(s), \\alpha(s) \\rangle = r^2$ ($r > 0$).\n(1) Demuestra que $\\langle \\alpha(s), t(s) \\rangle = 0$ para todo $s$.\n(2) Demuestra que $1 + k(s)\\langle \\alpha(s), n(s) \\rangle = 0$ para todo $s$.\n(3) Demuestra que $k(s) \\ge r^{-1}$ para todo $s$.\n(4) Demuestra que si $k(s) = r^{-1}$ entonces $n(s) = -\\alpha(s)/r$.\n(5) Demuestra que si $k(s) \\neq r^{-1}$ entonces el vector binormal satisface $\\langle \\alpha(s), b(s) \\rangle \\neq 0$.\n(6) Deduce que si la curvatura de $\\alpha$ es constante, entonces la traza de $\\alpha$ está contenida en una circunferencia.",
             state: "pending", comment: ""
           }
         ]
@@ -362,12 +412,12 @@
         exercises: [
           {
             id: "L2-E1", list: "Llista 2 (Superfícies)", num: "Ej. 1", title: "Superficie Cónica Parametrizada", desc: "Regularidad, traza y planos tangentes por el vértice.",
-            statement: "Dado ω ∈ (0, π/2), demuestra que φ(u, v) = u(sin ω cos v, sin ω sin v, cos ω), u ≠ 0, v ∈ ℝ es una superficie parametrizada regular.\n\nDemuestra que la traza de φ es S = {(x, y, z) ∈ ℝ³ | x² + y² = z² tan² ω} \\ {(0,0,0)}.\nProbar que todos los planos tangentes de φ pasan por el vértice (0,0,0) del cono, y que las rectas normales cortan al eje OZ formando un ángulo constante.",
+            statement: "Dado $\\omega \\in (0, \\pi/2)$, demuestra que $\\varphi(u, v) = u(\\sin \\omega \\cos v, \\sin \\omega \\sin v, \\cos \\omega)$, $u \\neq 0$, $v \\in \\mathbb{R}$ es una superficie parametrizada regular.\n\nDemuestra que la traza de $\\varphi$ es $$S = \\{(x, y, z) \\in \\mathbb{R}^3 \\mid x^2 + y^2 = z^2 \\tan^2 \\omega\\} \\setminus \\{(0,0,0)\\}.$$\nProbar que todos los planos tangentes de $\\varphi$ pasan por el vértice $(0,0,0)$ del cono, y que las rectas normales cortan al eje $OZ$ formando un ángulo constante.",
             state: "pending", comment: ""
           },
           {
             id: "L2-E10", list: "Llista 2 (Superfícies)", num: "Ej. 10", title: "Primera Forma Fundamental y Ángulos", desc: "Coeficientes E, F, G, longitud sobre la superficie y ángulo de corte.",
-            statement: "Consideramos la aplicación φ(u, v) = (cos u · e^v, sin u · e^v, e^v).\n(1) Prueba que φ define una superficie parametrizada regular y halla la expresión de la primera forma fundamental.\n(2) Prueba que la traza está contenida en {(x, y, z) ∈ ℝ³ | x² + y² = z²}.\n(3) Prueba que el plano tangente afín T_p φ contiene al origen para todo p.\n(4) Halla la longitud de la curva u = √2 v entre φ(0, 0) y φ(2, √2).\n(5) Halla el coseno del ángulo con el que se cortan las curvas u + v = 2 y v = u² en el punto φ(1, 1).",
+            statement: "Consideramos la aplicación $\\varphi(u, v) = (\\cos u \\cdot e^v, \\sin u \\cdot e^v, e^v)$.\n(1) Prueba que $\\varphi$ define una superficie parametrizada regular y halla la expresión de la primera forma fundamental.\n(2) Prueba que la traza está contenida en $\\{(x, y, z) \\in \\mathbb{R}^3 \\mid x^2 + y^2 = z^2\\}$.\n(3) Prueba que el plano tangente afín $T_p \\varphi$ contiene al origen para todo $p$.\n(4) Halla la longitud de la curva $u = \\sqrt{2} v$ entre $\\varphi(0, 0)$ y $\\varphi(2, \\sqrt{2})$.\n(5) Halla el coseno del ángulo con el que se cortan las curvas $u + v = 2$ y $v = u^2$ en el punto $\\varphi(1, 1)$.",
             state: "pending", comment: ""
           }
         ]
@@ -375,8 +425,8 @@
     ];
 
     function App() {
-      const PROBA_STORAGE_KEY = "proba_parcial_app_v8";
-      const GEO_STORAGE_KEY = "geo_parcial_app_v1";
+      const PROBA_STORAGE_KEY = "proba_parcial_app_v9";
+      const GEO_STORAGE_KEY = "geo_parcial_app_v2";
 
       const [selectedSubject, setSelectedSubject] = useState(null);
 
@@ -397,7 +447,6 @@
       const [copied, setCopied] = useState(false);
       const [statusFilter, setStatusFilter] = useState('all');
 
-      // Guardar en localStorage
       useEffect(() => {
         localStorage.setItem(PROBA_STORAGE_KEY, JSON.stringify(probaBlocks));
       }, [probaBlocks]);
@@ -406,7 +455,6 @@
         localStorage.setItem(GEO_STORAGE_KEY, JSON.stringify(geoBlocks));
       }, [geoBlocks]);
 
-      // Mapeo actual según asignatura seleccionada
       const currentBlocks = selectedSubject === 'prob' ? probaBlocks : selectedSubject === 'geo' ? geoBlocks : [];
       const setCurrentBlocks = selectedSubject === 'prob' ? setProbaBlocks : setGeoBlocks;
 
@@ -470,7 +518,6 @@
         setTimeout(() => setCopied(false), 2500);
       };
 
-      // MENU PRINCIPAL DE SELECCIÓN
       if (!selectedSubject) {
         return (
           <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center p-4">
@@ -484,7 +531,6 @@
               </p>
               
               <div className="space-y-4 text-left">
-                {/* PROBABILITATS */}
                 <button 
                   onClick={() => setSelectedSubject('prob')}
                   className="w-full group p-5 bg-gradient-to-r from-indigo-950/60 via-slate-800 to-indigo-900/40 hover:from-indigo-600 hover:to-sky-600 border border-indigo-500/30 hover:border-indigo-400 rounded-xl transition-all duration-300 flex items-center justify-between shadow-lg cursor-pointer"
@@ -494,13 +540,12 @@
                       <span>🎲</span> Parcial Probabilitats
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-400 group-hover:text-indigo-100 mt-1">
-                      27 ejercicios seleccionados • 5 bloques temáticos
+                      27 ejercicios seleccionados • Renderizado matemático activo
                     </p>
                   </div>
                   <span className="text-2xl text-indigo-400 group-hover:text-white transition-transform">→</span>
                 </button>
 
-                {/* GEOMETRIA DIFERENCIAL */}
                 <button 
                   onClick={() => setSelectedSubject('geo')}
                   className="w-full group p-5 bg-gradient-to-r from-purple-950/60 via-slate-800 to-purple-900/40 hover:from-purple-600 hover:to-pink-600 border border-purple-500/30 hover:border-purple-400 rounded-xl transition-all duration-300 flex items-center justify-between shadow-lg cursor-pointer"
@@ -510,13 +555,12 @@
                       <span>🌐</span> Parcial Geometria Diferencial
                     </h2>
                     <p className="text-xs sm:text-sm text-slate-400 group-hover:text-purple-100 mt-1">
-                      20 ejercicios seleccionados de la Llista 1 y Llista 2 • 5 bloques
+                      20 ejercicios en LaTeX • Renderizado matemático activo
                     </p>
                   </div>
                   <span className="text-2xl text-purple-400 group-hover:text-white transition-transform">→</span>
                 </button>
 
-                {/* ANÀLISI MATEMÀTIC */}
                 <button 
                   onClick={() => setSelectedSubject('analisi')}
                   className="w-full group p-5 bg-slate-800/40 hover:bg-slate-700/50 border border-slate-700/80 rounded-xl transition-all duration-200 flex items-center justify-between cursor-pointer"
@@ -722,14 +766,12 @@
                             </div>
                           </div>
 
-                          {/* RECUADRO DEL ENUNCIADO (FONDO BLANCO - TEXTO OSCURO - APARTADOS EN LÍNEAS SEPARADAS) */}
+                          {/* RECUADRO DEL ENUNCIADO CON KATEX */}
                           <div className="mb-3.5 p-4 rounded-xl bg-white border border-slate-300 shadow-md text-slate-900">
                             <div className="flex items-center gap-1.5 mb-2 text-xs font-bold text-slate-700 uppercase tracking-wider border-b border-slate-200 pb-1">
                               <span>📄 Enunciado del problema</span>
                             </div>
-                            <div className="text-xs sm:text-sm leading-relaxed text-slate-800 font-serif font-medium whitespace-pre-line space-y-1">
-                              {ex.statement}
-                            </div>
+                            <MathText text={ex.statement} />
                           </div>
 
                           {/* COMENTARIO / OBSERVACIONES */}
