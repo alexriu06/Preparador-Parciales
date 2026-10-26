@@ -371,16 +371,45 @@
     ];
 
     function App() {
+      const STORAGE_KEY = "proba_parcial_app_v5";
+
       const [selectedSubject, setSelectedSubject] = useState(null);
       const [blocks, setBlocks] = useState(() => {
-        const saved = localStorage.getItem("proba_canvas_blocks_v4");
-        return saved ? JSON.parse(saved) : INITIAL_BLOCKS;
+        // 1. Intentar cargar v5
+        const savedV5 = localStorage.getItem(STORAGE_KEY);
+        if (savedV5) return JSON.parse(savedV5);
+
+        // 2. Buscar datos de versiones anteriores para migrar automáticamente
+        const oldKeys = ["proba_canvas_blocks_v4", "proba_canvas_blocks_v3", "math_prep_blocks"];
+        for (const oldKey of oldKeys) {
+          const oldDataStr = localStorage.getItem(oldKey);
+          if (oldDataStr) {
+            try {
+              const oldBlocks = JSON.parse(oldDataStr);
+              // Mapear comentarios y estados anteriores a los enunciados actuales
+              const oldMap = new Map();
+              oldBlocks.flatMap(b => b.exercises).forEach(ex => oldMap.set(ex.id, ex));
+
+              return INITIAL_BLOCKS.map(b => ({
+                ...b,
+                exercises: b.exercises.map(ex => {
+                  const match = oldMap.get(ex.id);
+                  return match ? { ...ex, state: match.state || ex.state, comment: match.comment || ex.comment } : ex;
+                })
+              }));
+            } catch (err) {
+              console.error("Error al migrar versión anterior:", err);
+            }
+          }
+        }
+        return INITIAL_BLOCKS;
       });
+
       const [copied, setCopied] = useState(false);
       const [statusFilter, setStatusFilter] = useState('all');
 
       useEffect(() => {
-        localStorage.setItem("proba_canvas_blocks_v4", JSON.stringify(blocks));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(blocks));
       }, [blocks]);
 
       const updateState = (blockId, exId, newState) => {
@@ -400,7 +429,7 @@
       const handleReset = () => {
         if (window.confirm("¿Deseas reiniciar todo tu progreso y comentarios?")) {
           setBlocks(INITIAL_BLOCKS);
-          localStorage.removeItem("proba_canvas_blocks_v4");
+          localStorage.removeItem(STORAGE_KEY);
         }
       };
 
