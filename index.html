@@ -188,7 +188,7 @@
           },
           { 
             id: "L5-E4", list: "Llista 5", num: "Ej. 4", title: "Uniforme Discreta y Truncamiento", desc: "Transformación lineal y corte inferior mediante max(2, X).",
-            statement: "Sea $X$ una v.a. discreta uniformemente distribuida en $\\{1, \\dots, m\\}$, para $m \\ge 2$.\n(1) Encuentra la pmf y la cdf de $X$.\n(2) Calcula $P(\\{X \\text{ par}\\})$.\n(3) Fijadas $a > 0$ y $b$, determina la cdf de $Y = aX + b$. ¿Qué pasa si $a$ no es estrictamente positiva?\n(4) Si $m > 2$, determina la ley de $Z = \\max\\{2, X\\}$.",
+            statement: "Sea $X$ una v.a. discreta uniformemente distribuida en $\\{1, \\dots, m\\}$, para $m \\ge 2$.\n(1) Encuentra la pmf y la cdf de $X$.\n(2) Calcula $P(\\{X \\text{ par}\\})$.\n(3) Fijadas $a > 0$ y $b$, determina la cdf de $Y = aX + b$. ¿Qué pasa si $a$ no es strictly positiva?\n(4) Si $m > 2$, determina la ley de $Z = \\max\\{2, X\\}$.",
             state: "pending", comment: "" 
           }
         ]
@@ -202,7 +202,7 @@
         exercises: [
           { 
             id: "L4-E2", list: "Llista 4", num: "Ej. 2", title: "CDF Mixta por Tramos", desc: "Cálculo de P(X in A) en funciones con saltos y tramos continuos.",
-            statement: "Sea $X$ una v.a. con función de distribución:\n$$F(x) = \\begin{cases} 0, & \\text{si } x < -1 \\\\ \ 1 + \frac{x}{9}, & \\text{si } -1 \\le x < 0 \\\\ \\frac{2+x}{9}, & \\text{si } 0 \\le x < 2 \\\\ 1, & \\text{si } 2 \\le x \\end{cases}$$\nCalcula:\n(a) $P(X = 2)$\n(b) $P(X \\in [1/2, 3))$\n(c) $P(X = 2 \\mid X \\in [1/2, 3))$\n(d) $P(X \\in (-1, 0] \\cup (1, 2])$\n(e) $P(X \\in ((-1, 2] \\cap (1, 3)))$\n(f) $P(X \\in \\{x \\in \\mathbb{R} : |x| + 2x^2 > 3\\})$",
+            statement: "Sea $X$ una v.a. con función de distribución:\n$$F(x) = \\begin{cases} 0, & \\text{si } x < -1 \\\\ 1 + \\frac{x}{9}, & \\text{si } -1 \\le x < 0 \\\\ \\frac{2+x}{9}, & \\text{si } 0 \\le x < 2 \\\\ 1, & \\text{si } 2 \\le x \\end{cases}$$\nCalcula:\n(a) $P(X = 2)$\n(b) $P(X \\in [1/2, 3))$\n(c) $P(X = 2 \\mid X \\in [1/2, 3))$\n(d) $P(X \\in (-1, 0] \\cup (1, 2])$\n(e) $P(X \\in ((-1, 2] \\cap (1, 3)))$\n(f) $P(X \\in \\{x \\in \\mathbb{R} : |x| + 2x^2 > 3\\})$",
             state: "pending", comment: "" 
           },
           { 
@@ -412,7 +412,7 @@
         exercises: [
           {
             id: "L2-E1", list: "Llista 2 (Superfícies)", num: "Ej. 1", title: "Superficie Cónica Parametrizada", desc: "Regularidad, traza y planos tangentes por el vértice.",
-            statement: "Dado $\\omega \\in (0, \\pi/2)$, demuestra que $\\varphi(u, v) = u(\\sin \\omega \\cos v, \\sin \\omega \\sin v, \\cos \\omega)$, $u \\neq 0$, $v \\in \\mathbb{R}$ es una superficie parametrizada regular.\n\nDemuestra que la traza de $\\varphi$ es $$S = \\{(x, y, z) \\in \\mathbb{R}^3 \\mid x^2 + y^2 = z^2 \\tan^2 \\omega\\} \\setminus \\{(0,0,0)\\}.$$\nProbar que todos los planos tangentes de $\\varphi$ pasan por el vértice $(0,0,0)$ del cono, y que las rectas normales cortan al eje $OZ$ formando un ángulo constante.",
+            statement: "Dado $\\omega \\in (0, \\pi/2)$, demuestra que $\\varphi(u, v) = u(\\sin \\omega \\cos v, \\sin \\omega \\sin v, \\cos \\omega)$, $u \\neq 0$, $v \\in \\mathbb{R}$ es una superficie parametrizada regular.\n\nDemuestra que la traza de $\\varphi$ es $$S = \\{(x, y, z) \\in \\mathbb{R}^3 \\mid x^2 + y^2 = z^2 \\tan^2 \\omega\\} \\setminus \\{(0,0,0)\\}.$$\nProbar que todos los planos tangentes de $\\varphi$ pasan por el vértice $(0,0,0)$ del cono, y que las rectas normales cortan al eje $OZ$ forming un ángulo constante.",
             state: "pending", comment: ""
           },
           {
@@ -425,19 +425,18 @@
     ];
 
     function App() {
-      const PROBA_STORAGE_KEY = "proba_parcial_app_v9";
-      const GEO_STORAGE_KEY = "geo_parcial_app_v2";
+      // Claves de almacenamiento v10 para asegurar la actualización limpia del JSON
+      const PROBA_STORAGE_KEY = "proba_parcial_app_v10";
+      const GEO_STORAGE_KEY = "geo_parcial_app_v3";
 
       const [selectedSubject, setSelectedSubject] = useState(null);
 
-      // Estado de Probabilitats
       const [probaBlocks, setProbaBlocks] = useState(() => {
         const saved = localStorage.getItem(PROBA_STORAGE_KEY);
         if (saved) return JSON.parse(saved);
         return PROBA_BLOCKS;
       });
 
-      // Estado de Geometria Diferencial
       const [geoBlocks, setGeoBlocks] = useState(() => {
         const saved = localStorage.getItem(GEO_STORAGE_KEY);
         if (saved) return JSON.parse(saved);
