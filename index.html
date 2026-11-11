@@ -422,8 +422,8 @@
       }
     ];
 
-    // ==========================================
-    // DATOS DE ANÀLISI MATEMÀTICA (30 ejercicios exactos)
+  // ==========================================
+    // DATOS DE ANÀLISI MATEMÀTICA (Enunciados completos y estructurados)
     // ==========================================
     const ANALISI_BLOCKS = [
       {
@@ -435,12 +435,12 @@
         exercises: [
           {
             id: "AN-B1-E1", list: "Lista 1", num: "Ej. 8", title: "Métrica Acotada Equivalente", desc: "Demostración de d*(x,y) y sucesiones.",
-            statement: "Sea $(X,d)$ un espacio métrico. Definimos $$d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$$\n(a) Demuestre que $d^*$ es una distancia.\n(b) Demuestre que $d$ y $d^*$ tienen las mismas sucesiones convergentes.",
+            statement: "Sea $(X,d)$ un espacio métrico. Definimos $$d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$$\n\n(a) Demuestre que $d^*$ es una distancia.\n(b) Demuestre que $d$ y $d^*$ tienen las mismas sucesiones convergentes.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E2", list: "Lista 1", num: "Ej. 9", title: "Métrica Vía del Tren en R²", desc: "Distancia tipo vía del tren y bolas abiertas.",
-            statement: "Sea $d: \\mathbb{R}^2 \\to \\mathbb{R}$ definida por $d(x,y) = \\Vert{}x-y\\Vert{}$ si $x, y, 0$ están alineados, y $\\Vert{}x\\Vert{} + \\Vert{}y\\Vert{}$ en caso contrario (con $\\Vert{}x\\Vert{}$ norma euclidiana).\n(i) Demuestre que $d$ es una distancia.\n(ii) Describa explícitamente $B((1,1),2)$.\n(iii) Demuestre las propiedades de convergencia y alineación de sucesiones de Cauchy.",
+            statement: "Sea $d: \\mathbb{R}^2 \\to \\mathbb{R}$ definida por $d(x,y) = \\Vert{}x-y\\Vert{}$ si $x, y, 0$ están alineados, y $\\Vert{}x\\Vert{} + \\Vert{}y\\Vert{}$ en caso contrario (con $\\Vert{}x\\Vert{}$ norma euclidiana).\n\n(i) Demuestre que $d$ es una distancia.\n(ii) Describa explícitamente $B((1,1),2)$.\n(iii) Demuestre las propiedades de convergencia y alineación de sucesiones de Cauchy.",
             state: "pending", comment: ""
           },
           {
@@ -460,7 +460,7 @@
           },
           {
             id: "AN-B1-E6", list: "Parcial 7/11/2018", num: "Ej. 2b", title: "Distancia d_A en Abierto Propio", desc: "Construcción mediante distancia al complemento.",
-            statement: "Sea $A \\subsetneq \\mathbb{R}^n$ un subconjunto abierto. Definimos $d_A: A \\times A \\to \\mathbb{R}$ por $$d_A(x,y) = \\Vert{}x-y\\Vert{} + \\left\\vert{}\\frac{1}{d(x, \\mathbb{R}^n \\setminus A)} - \\frac{1}{d(y, \\mathbb{R}^n \\setminus A)}\\right\\vert{}$$\n(1) Demuestre que $d_A$ está bien definida y que es una distancia.\n(2) Demuestre que si $(x_n)_n \\subset A$ y $x \\in A$, $\\Vert{}x_n - x\\Vert{} \\to 0$ si y solo si $d_A(x_n, x) \\to 0$.",
+            statement: "Sea $A \\subsetneq \\mathbb{R}^n$ un subconjunto abierto. Definimos $d_A: A \\times A \\to \\mathbb{R}$ por $$d_A(x,y) = \\Vert{}x-y\\Vert{} + \\left\\vert{}\\frac{1}{d(x, \\mathbb{R}^n \\setminus A)} - \\frac{1}{d(y, \\mathbb{R}^n \\setminus A)}\\right\\vert{}$$\n\n(1) Demuestre que $d_A$ está bien definida y que es una distancia.\n(2) Demuestre que si $(x_n)_n \\subset A$ y $x \\in A$, $\\Vert{}x_n - x\\Vert{} \\to 0$ si y solo si $d_A(x_n, x) \\to 0$.",
             state: "pending", comment: ""
           }
         ]
@@ -518,7 +518,7 @@
           },
           {
             id: "AN-B3-E3", list: "Lista 1", num: "Ej. 27", title: "Máximo Absoluto sin Mínimo", desc: "Funciones estrictamente positivas con límite 0.",
-            statement: "Sea $(X,d)$ espacio métrico y $f: X \\to (0,\\infty)$ continua. Suponga que para todo $\\epsilon > 0$ existe compacto $K_\\epsilon \\subset X$ tal que $f(x) < \\epsilon$ si $x \\notin K_\\epsilon$.\n(a) Demuestre que $f$ tiene máximo absoluto.\n(b) Demuestre que no tiene mínimo absoluto.\n(c) Demuestre que es uniformemente continua.",
+            statement: "Sea $(X,d)$ espacio métrico y $f: X \\to (0,\\infty)$ continua. Suponga que para todo $\\epsilon > 0$ existe compacto $K_\\epsilon \\subset X$ tal que $f(x) < \\epsilon$ si $x \\notin K_\\epsilon$.\n\n(a) Demuestre que $f$ tiene máximo absoluto.\n(b) Demuestre que no tiene mínimo absoluto.\n(c) Demuestre que es uniformemente continua.",
             state: "pending", comment: ""
           },
           {
@@ -537,17 +537,17 @@
         exercises: [
           {
             id: "AN-B4-E1", list: "Lista 2", num: "Ej. 1", title: "Convergencia de nx e^(-nx)", desc: "Estudio en [0,1] y subintervalos.",
-            statement: "Considere la sucesión de funciones $f_n: [0,1] \\to \\mathbb{R}$ definida por $f_n(x) = n x e^{-nx}$.\n(a) Calcule el límite puntual en $[0,1]$.\n(b) ¿Converge uniformemente en $[0,1]$?\n(c) Sea $0 < \\delta < 1$, ¿converge uniformemente en $[\\delta, 1]$?",
+            statement: "Considere la sucesión de funciones $f_n: [0,1] \\to \\mathbb{R}$ definida por $f_n(x) = n x e^{-nx}$.\n\n(a) Calcule el límite puntual en $[0,1]$.\n(b) ¿Converge uniformemente en $[0,1]$?\n(c) Sea $0 < \\delta < 1$, ¿converge uniformemente en $[\\delta, 1]$?",
             state: "pending", comment: ""
           },
           {
             id: "AN-B4-E2", list: "Lista 2", num: "Ej. 2", title: "Convergencia de nx / (1 + n²x²)", desc: "Estudio en [0,1].",
-            statement: "Considere la sucesión $f_n(x) = \\frac{nx}{1+n^2 x^2}$ en $[0,1]$.\n(a) Calcule el límite puntual.\n(b) Estudie la convergencia uniforme en $[0,1]$.\n(c) Estudie la convergencia uniforme en $[\\delta, 1]$.",
+            statement: "Considere la sucesión $f_n(x) = \\frac{nx}{1+n^2 x^2}$ en $[0,1]$.\n\n(a) Calcule el límite puntual.\n(b) Estudie la convergencia uniforme en $[0,1]$.\n(c) Estudie la convergencia uniforme en $[\\delta, 1]$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B4-E3", list: "Lista 2", num: "Ej. 3", title: "Parámetro Alfa en n^alpha x (1-x^2)^n", desc: "Análisis de convergencia uniforme.",
-            statement: "Para $\\alpha \\in \\mathbb{R}$, sea $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$.\n(a) Calcule $\\lim_{n\\to\\infty} f_n^\\alpha(x)$.\n(b) Demuestre que converge uniformemente si y solo si $\\alpha < 1/2$.\n(c) Para qué valores converge uniformemente en $[\\rho, 1]$ ($0 < \\rho < 1$).",
+            statement: "Para $\\alpha \\in \\mathbb{R}$, sea $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$.\n\n(a) Calcule $\\lim_{n\\to\\infty} f_n^\\alpha(x)$.\n(b) Demuestre que converge uniformemente si y solo si $\\alpha < 1/2$.\n(c) Para qué valores converge uniformemente en $[\\rho, 1]$ ($0 < \\rho < 1$).",
             state: "pending", comment: ""
           }
         ]
@@ -561,7 +561,7 @@
         exercises: [
           {
             id: "AN-B5-E1", list: "Lista 2", num: "Ej. 6", title: "Serie con Término x sqrt(n) / (1 + n x²)", desc: "Estudio de sucesión y serie.",
-            statement: "Sea $f_n(x) = \\frac{x\\sqrt{n}}{1+nx^2}$.\n(a) Calcule el límite puntual de $(f_n)_n$.\n(b) y (c) Estudie la convergencia uniforme en $\\mathbb{R}$ y $\\mathbb{R} \\setminus (-a,a)$.\n(d), (e) y (f) Estudie la convergencia puntual y uniforme de la serie $\\sum_{n=1}^\\infty f_n^3$.",
+            statement: "Sea $f_n(x) = \\frac{x\\sqrt{n}}{1+nx^2}$.\n\n(a) Calcule el límite puntual de $(f_n)_n$.\n(b) y (c) Estudie la convergencia uniforme en $\\mathbb{R}$ y $\\mathbb{R} \\setminus (-a,a)$.\n(d), (e) y (f) Estudie la convergencia puntual y uniforme de la serie $\\sum_{n=1}^\\infty f_n^3$.",
             state: "pending", comment: ""
           },
           {
