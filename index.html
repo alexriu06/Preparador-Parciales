@@ -272,7 +272,7 @@
     ];
 
     // ==========================================
-    // DATOS DE GEOMETRIA DIFERENCIAL (20 ejercicios con LaTeX)
+    // DATOS DE GEOMETRIA DIFERENCIAL (20 ejercicios)
     // ==========================================
     const GEO_BLOCKS = [
       {
@@ -422,21 +422,219 @@
       }
     ];
 
+    // ==========================================
+    // DATOS DE ANÀLISI MATEMÀTICA (30 ejercicios exactos)
+    // ==========================================
+    const ANALISI_BLOCKS = [
+      {
+        id: 1,
+        title: "BLOQUE I: Espacios Métricos, Distancias y Topología",
+        badgeColor: "bg-teal-500/20 text-teal-300 border-teal-500/30",
+        cardBg: "bg-teal-950/30 border-teal-500/30",
+        headerBg: "bg-teal-900/40 text-teal-200 border-teal-500/40",
+        exercises: [
+          {
+            id: "AN-B1-E1", list: "Lista 1", num: "Ej. 8", title: "Métrica Acotada Equivalente", desc: "Demostración de d*(x,y) = d(x,y)/(1+d(x,y)).",
+            statement: "Demostración de que $d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$ es una distancia y preserva sucesiones convergentes.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E2", list: "Lista 1", num: "Ej. 9", title: "Métrica Vía del Tren en R²", desc: "Distancia en R² tipo vía del tren y descripción de la bola.",
+            statement: "Distancia en $\\mathbb{R}^2$ tipo \"vía del tren\" y descripción de la bola abierta.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E3", list: "Lista 1", num: "Ej. 10", title: "Suma de Cerrado y Compacto", desc: "Cerradura de B + K en R.",
+            statement: "Demostración de que la suma de un cerrado $B$ y un compacto $K$ en $\\mathbb{R}$ ($B+K$) es un conjunto cerrado.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E4", list: "Lista 1", num: "Ej. 13", title: "Homeomorfismo con la Bola Abierta", desc: "Aplicación phi(x) = rx / (1 + ||x||).",
+            statement: "Homeomorfismo entre un espacio normado $X$ y la bola $B(0,r)$ mediante $\\phi(x) = \\frac{rx}{1+\\Vert{}x\\Vert{}}$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E5", list: "Lista 1", num: "Ej. 19", title: "Distancia entre Compacto y Cerrado", desc: "Desigualdad d(K, F) > 0 para disjuntos.",
+            statement: "Demostración de que la distancia entre un compacto $K$ y un cerrado $F$ disjuntos es estrictamente positiva ($d(K,F) > 0$).",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E6", list: "Parcial 7/11/2018", num: "Ej. 2b", title: "Distancia d_A en Abierto Propio", desc: "Construcción mediante distancia al complemento.",
+            statement: "Distancia $d_A(x,y)$ en un conjunto abierto $A \\subsetneq \\mathbb{R}^n$ construida mediante la distancia al complemento.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E7", list: "Reevaluació Tardor", num: "Ej. 3", title: "Propiedades del Subconjunto en l^p", desc: "Estudio de cerrado/abierto en espacios normados l^p.",
+            statement: "Propiedades del subconjunto $A_p$ en el espacio normado $\\ell^p$ ($p \\ge 1$) y prueba de si es o no cerrado.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B1-E8", list: "Prova Final 19/01/2021", num: "Ej. 2", title: "Espacio Métrico sobre N", desc: "Métrica no acotada y puntos aislados.",
+            statement: "Espacio métrico completo $(X, d)$ sobre $X = \\mathbb{N}$ con métrica no acotada y puntos aislados.",
+            state: "pending", comment: ""
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "BLOQUE II: Sucesiones, Completitud y Compacidad",
+        badgeColor: "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+        cardBg: "bg-cyan-950/30 border-cyan-500/30",
+        headerBg: "bg-cyan-900/40 text-cyan-200 border-cyan-500/40",
+        exercises: [
+          {
+            id: "AN-B2-E9", list: "Lista 1", num: "Ej. 2", title: "Condición para Sucesión de Cauchy", desc: "Convergencia de la serie de distancias.",
+            statement: "Condición suficiente para sucesión de Cauchy mediante la convergencia de la serie de distancias $\\sum d(x_n, x_{n+1}) < \\infty$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B2-E10", list: "Lista 1", num: "Ej. 4", title: "Convergencia por Subsucesiones", desc: "Subsucesiones 3n, 3n+1 y 3n+2.",
+            statement: "Convergencia de una sucesión $(x_n)_n$ si sus tres subsucesiones $(x_{3n})_n$, $(x_{3n+1})_n$ y $(x_{3n+2})_n$ convergen al mismo punto.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B2-E11", list: "Lista 2", num: "Ej. 18", title: "Equicontinuidad Local vs Global", desc: "Caracterización en compactos.",
+            statement: "Caracterización de equicontinuidad en puntos vs en todo el espacio métrico compacto $K$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B2-E12", list: "Lista 2", num: "Ej. 20a", title: "Arzelà-Ascoli en Integrales", desc: "Aplicación a F_n(x) = integral f_n(t)dt.",
+            statement: "Aplicación del Teorema de Arzelà-Ascoli a la sucesión de integrales $F_n(x) = \\int_a^x f_n(t) dt$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B2-E13", list: "Parcial 7/11/2018", num: "Ej. 1", title: "Teorema de Intervalos Encajados", desc: "Enunciado y demostración teórica.",
+            statement: "Enunciado y demostración teórica del Teorema de los Intervalos Encajados (Teorema dels intervals encaixats).",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B2-E14", list: "Reevaluació 27/01/2020", num: "Ej. 1", title: "Demostración Teorema de Weierstrass", desc: "Máximo y mínimo en compactos.",
+            statement: "Demostración del Teorema de Weierstrass (toda función continua en un compacto $K$ alcanza su máximo).",
+            state: "pending", comment: ""
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "BLOQUE III: Continuidad y Continuidad Uniforme",
+        badgeColor: "bg-blue-500/20 text-blue-300 border-blue-500/30",
+        cardBg: "bg-blue-950/30 border-blue-500/30",
+        headerBg: "bg-blue-900/40 text-blue-200 border-blue-500/40",
+        exercises: [
+          {
+            id: "AN-B3-E15", list: "Lista 1", num: "Ej. 21", title: "Continuidad Uniforme de Función Integral", desc: "Estudio de F(x) en [0, +inf).",
+            statement: "Continuidad uniforme de la función integral $F(x) = \\int_0^1 f(x+t)g(t) dt$ en $[0, +\\infty)$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B3-E16", list: "Lista 1", num: "Ej. 25a", title: "Preservación de Sucesiones de Cauchy", desc: "Bajo aplicaciones uniformemente continuas.",
+            statement: "Preservación de sucesiones de Cauchy mediante aplicaciones uniformemente continuas.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B3-E17", list: "Lista 1", num: "Ej. 27", title: "Máximo Absoluto sin Mínimo", desc: "Funciones estrictamente positivas con límite 0.",
+            statement: "Demostración de existencia de máximo absoluto y ausencia de mínimo en funciones continuas estrictamente positivas con límite $0$ en el infinito.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B3-E18", list: "Parcial 7/11/2018", num: "Ej. 3b", title: "Continuidad Uniforme de Raíz de x", desc: "Estudio en [0, +inf).",
+            statement: "Continuidad uniforme de $f(x) = \\sqrt{x}$ en $[0, +\\infty)$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B3-E19", list: "Prova Final 19/01/2021", num: "Ej. 3a", title: "Continuidad Uniforme de 1/p(x)", desc: "Polinomio sin raíces reales.",
+            statement: "Continuidad uniforme de $f(x) = \\frac{1}{p(x)}$ para un polinomio sin raíces reales.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B3-E20", list: "Examen Final 10/01/2019", num: "Ej. 3.2", title: "Continuidad de Diferencia Trigonométrica", desc: "Estudio en (0,1) de 1/sin(x) - 1/x.",
+            statement: "Estudio de la continuidad uniforme de $f(x) = \\frac{1}{\\sin x} - \\frac{1}{x}$ en el intervalo abierto $(0,1)$.",
+            state: "pending", comment: ""
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "BLOQUE IV: Sucesiones de Funciones",
+        badgeColor: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+        cardBg: "bg-emerald-950/30 border-emerald-500/30",
+        headerBg: "bg-emerald-900/40 text-emerald-200 border-emerald-500/40",
+        exercises: [
+          {
+            id: "AN-B4-E21", list: "Lista 2", num: "Ej. 1", title: "Convergencia de nx e^(-nx)", desc: "Estudio en [0,1] y subintervalos.",
+            statement: "Límite puntual y convergencia uniforme de $f_n(x) = n x e^{-nx}$ en $[0,1]$ y en subintervalos $[\\delta, 1]$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B4-E22", list: "Lista 2", num: "Ej. 2", title: "Convergencia de nx / (1 + n²x²)", desc: "Estudio en [0,1].",
+            statement: "Límite puntual y convergencia uniforme de $f_n(x) = \\frac{nx}{1 + n^2 x^2}$ en $[0,1]$ y subintervalos $[\\delta, 1]$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B4-E23", list: "Lista 2", num: "Ej. 3", title: "Parámetro Alfa en n^alpha x (1-x^2)^n", desc: "Análisis de convergencia uniforme.",
+            statement: "Análisis del parámetro $\\alpha$ para la convergencia uniforme de $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B4-E24", list: "Final Tardor", num: "Ej. 4", title: "Sucesión con Pico Móvil", desc: "Estudio de x² / (x² + (1-nx)²).",
+            statement: "Límite puntual y convergencia uniforme de $f_n(x) = \\frac{x^2}{x^2 + (1-nx)^2}$ en $[0,1]$ y en $[a,1]$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B4-E25", list: "Prova Final 9/01/2020", num: "Ej. 4b", title: "Convergencia de Potencia Trigonométrica", desc: "Estudio en toda la recta real.",
+            statement: "Convergencia puntual y uniforme de $g_n(x) = \\left(\\frac{1+n^2 \\sin^2 x}{2n^2 + \\sin x}\\right)^{10}$ en toda la recta real $\\mathbb{R}$.",
+            state: "pending", comment: ""
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "BLOQUE V: Series de Funciones, Integración y Teoremas de Aproximación",
+        badgeColor: "bg-purple-500/20 text-purple-300 border-purple-500/30",
+        cardBg: "bg-purple-950/30 border-purple-500/30",
+        headerBg: "bg-purple-900/40 text-purple-200 border-purple-500/40",
+        exercises: [
+          {
+            id: "AN-B5-E26", list: "Lista 2", num: "Ej. 6", title: "Serie con Término x sqrt(n) / (1 + n x²)", desc: "Estudio de sucesión y serie.",
+            statement: "Estudio de la convergencia puntual y uniforme de la sucesión y de la serie $\\sum_{n=1}^\\infty f_n^3(x)$ para $f_n(x) = \\frac{x\\sqrt{n}}{1 + n x^2}$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B5-E27", list: "Lista 2", num: "Ej. 14", title: "Momentos Nulos vía Stone-Weierstrass", desc: "Demostración de función nula.",
+            statement: "Demostración del Teorema de los momentos nulos ($\\int_a^b x^n f(x) dx = 0, \\forall n \\ge 0 \\implies f \\equiv 0$) usando Stone-Weierstrass.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B5-E28", list: "Lista 2", num: "Ej. 17", title: "Aproximación de Funciones Pares", desc: "Aplicación de Stone-Weierstrass.",
+            statement: "Aproximación de funciones pares en subálgebras continuas $C(K)$ mediante el Teorema de Stone-Weierstrass.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B5-E29", list: "Prova Final 9/01/2020", num: "Ej. 5", title: "Dominio y Suma de Serie Exponencial", desc: "Estudio de suma S(x) para la serie dada.",
+            statement: "Dominio de convergencia $E$, convergencia uniforme y función suma $S(x)$ de $\\sum_{n=1}^\\infty \\frac{e^{(n+1)x}}{n(n+1)}$.",
+            state: "pending", comment: ""
+          },
+          {
+            id: "AN-B5-E30", list: "Final Tardor", num: "Ej. 5.2", title: "Dominio y Suma de Serie Logarítmica/Exponencial", desc: "Cálculo de función suma.",
+            statement: "Dominio de convergencia y cálculo de la función suma de $\\sum_{n=1}^\\infty \\frac{1}{n}(e^{x^2}-2)^n$.",
+            state: "pending", comment: ""
+          }
+        ]
+      }
+    ];
+
     // FUNCIÓN AUXILIAR DE RECUPERACIÓN / MIGRACIÓN AUTOMÁTICA
     function loadAndMigrateData(finalKey, legacyKeys, defaultBlocks) {
-      // 1. Si ya existe la clave fija definitiva, usarla
       const savedFinal = localStorage.getItem(finalKey);
       if (savedFinal) {
         try { return JSON.parse(savedFinal); } catch(e){}
       }
 
-      // 2. Si no existe, buscar en todas las versiones anteriores de las claves
       for (const oldKey of legacyKeys) {
         const savedOld = localStorage.getItem(oldKey);
         if (savedOld) {
           try {
             const oldBlocks = JSON.parse(savedOld);
-            // Fusionar comentarios y estados anteriores manteniendo los enunciados nuevos en LaTeX
             const merged = defaultBlocks.map(defaultBlock => {
               const oldBlock = oldBlocks.find(b => b.id === defaultBlock.id);
               if (!oldBlock) return defaultBlock;
@@ -455,25 +653,25 @@
               };
             });
 
-            // Guardar en la clave definitiva
             localStorage.setItem(finalKey, JSON.stringify(merged));
             return merged;
           } catch (e) {}
         }
       }
 
-      // 3. Si es una instalación limpia sin datos previos
       return defaultBlocks;
     }
 
     function App() {
-      // CLAVES DEFINTIVAS PERMANENTES
+      // CLAVES DEFINITIVAS PERMANENTES
       const PROBA_FINAL_KEY = "parciales_app_proba_v_final";
       const GEO_FINAL_KEY = "parciales_app_geo_v_final";
+      const ANALISI_FINAL_KEY = "parciales_app_analisi_v_final";
 
-      // CLAVES LEGACY PARA MIGRAR AUTOMÁTICAMENTE TUS DATOS ANTERIORES
+      // CLAVES LEGACY PARA MIGRAR AUTOMÁTICAMENTE DATOS ANTERIORES
       const PROBA_MIGRATION_KEYS = ["proba_parcial_app_v10", "proba_parcial_app_v9", "proba_parcial_app_v8", "proba_parcial_app_v1"];
       const GEO_MIGRATION_KEYS = ["geo_parcial_app_v3", "geo_parcial_app_v2", "geo_parcial_app_v1"];
+      const ANALISI_MIGRATION_KEYS = ["analisi_parcial_app_v1"];
 
       const [selectedSubject, setSelectedSubject] = useState(null);
 
@@ -485,10 +683,13 @@
         loadAndMigrateData(GEO_FINAL_KEY, GEO_MIGRATION_KEYS, GEO_BLOCKS)
       );
 
+      const [analisiBlocks, setAnalisiBlocks] = useState(() => 
+        loadAndMigrateData(ANALISI_FINAL_KEY, ANALISI_MIGRATION_KEYS, ANALISI_BLOCKS)
+      );
+
       const [copied, setCopied] = useState(false);
       const [statusFilter, setStatusFilter] = useState('all');
 
-      // Guardar siempre en la clave definitiva
       useEffect(() => {
         localStorage.setItem(PROBA_FINAL_KEY, JSON.stringify(probaBlocks));
       }, [probaBlocks]);
@@ -497,8 +698,12 @@
         localStorage.setItem(GEO_FINAL_KEY, JSON.stringify(geoBlocks));
       }, [geoBlocks]);
 
-      const currentBlocks = selectedSubject === 'prob' ? probaBlocks : selectedSubject === 'geo' ? geoBlocks : [];
-      const setCurrentBlocks = selectedSubject === 'prob' ? setProbaBlocks : setGeoBlocks;
+      useEffect(() => {
+        localStorage.setItem(ANALISI_FINAL_KEY, JSON.stringify(analisiBlocks));
+      }, [analisiBlocks]);
+
+      const currentBlocks = selectedSubject === 'prob' ? probaBlocks : selectedSubject === 'geo' ? geoBlocks : selectedSubject === 'analisi' ? analisiBlocks : [];
+      const setCurrentBlocks = selectedSubject === 'prob' ? setProbaBlocks : selectedSubject === 'geo' ? setGeoBlocks : setAnalisiBlocks;
 
       const updateState = (blockId, exId, newState) => {
         setCurrentBlocks(prev => prev.map(b => b.id === blockId ? {
@@ -522,6 +727,9 @@
           } else if (selectedSubject === 'geo') {
             setGeoBlocks(GEO_BLOCKS);
             localStorage.removeItem(GEO_FINAL_KEY);
+          } else if (selectedSubject === 'analisi') {
+            setAnalisiBlocks(ANALISI_BLOCKS);
+            localStorage.removeItem(ANALISI_FINAL_KEY);
           }
         }
       };
@@ -534,7 +742,12 @@
       const progressPercent = allExercises.length > 0 ? Math.round((totalCompleted / allExercises.length) * 100) : 0;
 
       const generateSummaryMarkdown = () => {
-        const subjectName = selectedSubject === 'prob' ? 'Probabilitats' : 'Geometria Diferencial de Corbes i Superfícies';
+        const subjectName = selectedSubject === 'prob' 
+          ? 'Probabilitats' 
+          : selectedSubject === 'geo' 
+            ? 'Geometria Diferencial de Corbes i Superfícies'
+            : 'Anàlisi Matemàtica';
+
         let md = `### 📊 RESUMEN DE PROGRESO - ${subjectName.toUpperCase()}\n`;
         md += `**Progreso global:** ${progressPercent}% (${totalCompleted}/${allExercises.length} resueltos)\n`;
         md += `🟢 Fácil/Dominados: ${easyCount} | 🟡 Con dudas/difícil: ${doubtCount} | ⚪ Pendientes: ${pendingCount}\n\n`;
@@ -573,6 +786,7 @@
               </p>
               
               <div className="space-y-4 text-left">
+                {/* PROBABILITATS */}
                 <button 
                   onClick={() => setSelectedSubject('prob')}
                   className="w-full group p-5 bg-gradient-to-r from-indigo-950/60 via-slate-800 to-indigo-900/40 hover:from-indigo-600 hover:to-sky-600 border border-indigo-500/30 hover:border-indigo-400 rounded-xl transition-all duration-300 flex items-center justify-between shadow-lg cursor-pointer"
@@ -588,6 +802,7 @@
                   <span className="text-2xl text-indigo-400 group-hover:text-white transition-transform">→</span>
                 </button>
 
+                {/* GEOMETRIA DIFERENCIAL */}
                 <button 
                   onClick={() => setSelectedSubject('geo')}
                   className="w-full group p-5 bg-gradient-to-r from-purple-950/60 via-slate-800 to-purple-900/40 hover:from-purple-600 hover:to-pink-600 border border-purple-500/30 hover:border-purple-400 rounded-xl transition-all duration-300 flex items-center justify-between shadow-lg cursor-pointer"
@@ -603,19 +818,20 @@
                   <span className="text-2xl text-purple-400 group-hover:text-white transition-transform">→</span>
                 </button>
 
+                {/* ANÀLISI MATEMÀTICA */}
                 <button 
                   onClick={() => setSelectedSubject('analisi')}
-                  className="w-full group p-5 bg-slate-800/40 hover:bg-slate-700/50 border border-slate-700/80 rounded-xl transition-all duration-200 flex items-center justify-between cursor-pointer"
+                  className="w-full group p-5 bg-gradient-to-r from-teal-950/60 via-slate-800 to-teal-900/40 hover:from-teal-600 hover:to-cyan-600 border border-teal-500/30 hover:border-teal-400 rounded-xl transition-all duration-300 flex items-center justify-between shadow-lg cursor-pointer"
                 >
                   <div>
-                    <h2 className="text-lg sm:text-xl font-bold text-slate-300 group-hover:text-white flex items-center gap-2">
-                      <span>📐</span> Parcial Anàlisi Matemàtic
+                    <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                      <span>📐</span> Parcial Anàlisi Matemàtica
                     </h2>
-                    <p className="text-xs sm:text-sm text-slate-500 group-hover:text-slate-300 mt-1">
-                      Módulo en preparación (plantilla vacía lista para cargar)
+                    <p className="text-xs sm:text-sm text-slate-400 group-hover:text-teal-100 mt-1">
+                      30 ejercicios exactos (Listas + Exámenes) • Renderizado LaTeX activo
                     </p>
                   </div>
-                  <span className="text-xs font-semibold px-2.5 py-1 bg-slate-700/80 text-slate-400 rounded-md">Próximamente</span>
+                  <span className="text-2xl text-teal-400 group-hover:text-white transition-transform">→</span>
                 </button>
               </div>
             </div>
@@ -623,27 +839,8 @@
         );
       }
 
-      if (selectedSubject === 'analisi') {
-        return (
-          <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center p-4">
-            <div className="max-w-md w-full bg-slate-800 border border-slate-700 rounded-2xl p-8 text-center shadow-xl">
-              <span className="text-4xl mb-4 block">🛠️</span>
-              <h2 className="text-2xl font-bold text-white mb-2">Parcial Anàlisi Matemàtic</h2>
-              <p className="text-slate-400 text-sm mb-6">
-                Esta plantilla está lista para alojar los problemas cuando carguemos los exámenes de esta materia.
-              </p>
-              <button 
-                onClick={() => setSelectedSubject(null)}
-                className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-medium rounded-xl text-sm transition cursor-pointer flex items-center gap-2 mx-auto"
-              >
-                ← Volver al menú
-              </button>
-            </div>
-          </div>
-        );
-      }
-
       const isGeo = selectedSubject === 'geo';
+      const isAnalisi = selectedSubject === 'analisi';
 
       return (
         <div className="min-h-screen bg-slate-900 text-slate-100 font-sans p-3 sm:p-6 pb-24">
@@ -660,7 +857,7 @@
                     ← Cambiar de Parcial
                   </button>
                   <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                    <span>{isGeo ? "🌐" : "🎲"}</span> Preparación Parcial {isGeo ? "Geometria Diferencial" : "Probabilitats"}
+                    <span>{isAnalisi ? "📐" : isGeo ? "🌐" : "🎲"}</span> Preparación Parcial {isAnalisi ? "Anàlisi Matemàtica" : isGeo ? "Geometria Diferencial" : "Probabilitats"}
                   </h1>
                 </div>
 
@@ -670,9 +867,11 @@
                     className={`px-4 py-2.5 rounded-xl font-bold transition-all shadow-lg flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer ${
                       copied 
                         ? "bg-emerald-600 text-white scale-105" 
-                        : isGeo 
-                          ? "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/40"
-                          : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-900/40"
+                        : isAnalisi
+                          ? "bg-teal-600 hover:bg-teal-500 text-white shadow-teal-900/40"
+                          : isGeo 
+                            ? "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/40"
+                            : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-900/40"
                     }`}
                   >
                     <span>{copied ? "¡Copiado al portapapeles!" : "📋 Analizar los resultados"}</span>
@@ -692,7 +891,7 @@
               <div className="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 shadow-lg">
                 <div className="flex justify-between items-center text-xs sm:text-sm font-semibold text-slate-300 mb-2">
                   <span>Progreso global: <strong>{totalCompleted} / {allExercises.length}</strong> ej.</span>
-                  <span className={`${isGeo ? "text-purple-400" : "text-indigo-400"} font-bold`}>{progressPercent}%</span>
+                  <span className={`${isAnalisi ? "text-teal-400" : isGeo ? "text-purple-400" : "text-indigo-400"} font-bold`}>{progressPercent}%</span>
                 </div>
 
                 <div className="w-full h-3 bg-slate-950 rounded-full overflow-hidden flex border border-slate-700/50 p-0.5">
@@ -768,9 +967,11 @@
                             <div className="space-y-1">
                               <div className="flex items-center gap-2 flex-wrap">
                                 <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded border ${
-                                  isGeo 
-                                    ? "bg-purple-950 text-purple-300 border-purple-700/50" 
-                                    : "bg-indigo-950 text-indigo-300 border-indigo-700/50"
+                                  isAnalisi
+                                    ? "bg-teal-950 text-teal-300 border-teal-700/50"
+                                    : isGeo 
+                                      ? "bg-purple-950 text-purple-300 border-purple-700/50" 
+                                      : "bg-indigo-950 text-indigo-300 border-indigo-700/50"
                                 }`}>
                                   {ex.list} - {ex.num}
                                 </span>
@@ -843,9 +1044,11 @@
                 className={`px-6 py-3 rounded-xl font-bold transition-all shadow-xl text-xs sm:text-sm cursor-pointer ${
                   copied 
                     ? "bg-emerald-600 text-white scale-105" 
-                    : isGeo
-                      ? "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/50"
-                      : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-900/50"
+                    : isAnalisi
+                      ? "bg-teal-600 hover:bg-teal-500 text-white shadow-teal-900/50"
+                      : isGeo
+                        ? "bg-purple-600 hover:bg-purple-500 text-white shadow-purple-900/50"
+                        : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-900/50"
                 }`}
               >
                 {copied ? "✓ Resumen copiado al portapapeles" : "📋 Analizar los resultados"}
