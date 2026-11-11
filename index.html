@@ -425,7 +425,6 @@
     // ==========================================
     // DATOS DE ANÀLISI MATEMÀTICA (30 ejercicios exactos)
     // ==========================================
-
     const ANALISI_BLOCKS = [
       {
         id: 1,
@@ -436,32 +435,32 @@
         exercises: [
           {
             id: "AN-B1-E1", list: "Lista 1", num: "Ej. 8", title: "Métrica Acotada Equivalente", desc: "Demostración de d*(x,y) y sucesiones.",
-            statement: "Sea $(X,d)$ un espacio métrico[cite: 3]. Definimos $$d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$$ (a) Demuestre que $d^*$ es una distancia[cite: 4]. (b) Demuestre que $d$ y $d^*$ tienen las mismas sucesiones convergentes[cite: 4].",
+            statement: "Sea $(X,d)$ un espacio métrico. Definimos $$d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$$\n(a) Demuestre que $d^*$ es una distancia.\n(b) Demuestre que $d$ y $d^*$ tienen las mismas sucesiones convergentes.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E2", list: "Lista 1", num: "Ej. 9", title: "Métrica Vía del Tren en R²", desc: "Distancia tipo vía del tren y bolas abiertas.",
-            statement: "Sea $d: \\mathbb{R}^2 \\to \\mathbb{R}$ definida por $d(x,y) = \\|x-y\\|$ si $x, y, 0$ están alineados, y $\\|x\\| + \\|y\\|$ en caso contrario (con $\\|x\\|$ norma euclidiana)[cite: 4]. (i) Demuestre que $d$ es una distancia[cite: 4]. (ii) Describa explícitamente $B((1,1),2)$[cite: 4]. (iii) Demuestre las propiedades de convergencia y alineación de sucesiones de Cauchy[cite: 4].",
+            statement: "Sea $d: \\mathbb{R}^2 \\to \\mathbb{R}$ definida por $d(x,y) = \\Vert{}x-y\\Vert{}$ si $x, y, 0$ están alineados, y $\\Vert{}x\\Vert{} + \\Vert{}y\\Vert{}$ en caso contrario (con $\\Vert{}x\\Vert{}$ norma euclidiana).\n(i) Demuestre que $d$ es una distancia.\n(ii) Describa explícitamente $B((1,1),2)$.\n(iii) Demuestre las propiedades de convergencia y alineación de sucesiones de Cauchy.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E3", list: "Lista 1", num: "Ej. 10", title: "Suma de Cerrado y Compacto", desc: "Cerradura de B + K en R.",
-            statement: "Sea $B \\subset \\mathbb{R}$ cerrado y $K \\subset \\mathbb{R}$ compacto[cite: 4]. Pruebe que el conjunto $B+K = \\{x+y : x \\in B, y \\in K\\}$ es cerrado[cite: 4].",
+            statement: "Sea $B \\subset \\mathbb{R}$ cerrado y $K \\subset \\mathbb{R}$ compacto. Pruebe que el conjunto $B+K = \\{x+y : x \\in B, y \\in K\\}$ es cerrado.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E4", list: "Lista 1", num: "Ej. 13", title: "Homeomorfismo con la Bola Abierta", desc: "Homeomorfismo entre espacio normado y bola.",
-            statement: "Sea $(X, \\|\\cdot\\|)$ un espacio normado[cite: 5]. Demuestre que para cada $r > 0$, $X$ es homeomorfo a la bola $B(0,r)$[cite: 5].",
+            statement: "Sea $(X, \\Vert{}\\cdot\\Vert{})$ un espacio normado. Demuestre que para cada $r > 0$, $X$ es homeomorfo a la bola $B(0,r)$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E5", list: "Lista 1", num: "Ej. 19", title: "Distancia entre Compacto y Cerrado", desc: "Desigualdad d(K, F) > 0 para disjuntos.",
-            statement: "Sean $K$ un subconjunto compacto y $F$ un subconjunto cerrado de un espacio métrico $(X,d)$ tales que $K \\cap F = \\emptyset$[cite: 6]. Demuestre que $l(K,F) := \\inf\\{d(x,y) : x \\in K, y \\in F\\} > 0$[cite: 6].",
+            statement: "Sean $K$ un subconjunto compacto y $F$ un subconjunto cerrado de un espacio métrico $(X,d)$ tales que $K \\cap F = \\emptyset$. Demuestre que $l(K,F) := \\inf\\{d(x,y) : x \\in K, y \\in F\\} > 0$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E6", list: "Parcial 7/11/2018", num: "Ej. 2b", title: "Distancia d_A en Abierto Propio", desc: "Construcción mediante distancia al complemento.",
-            statement: "Sea $A \\subsetneq \\mathbb{R}^n$ un subconjunto abierto[cite: 12]. Definimos $d_A: A \\times A \\to \\mathbb{R}$ por $$d_A(x,y) = \\|x-y\\| + \\left|\\frac{1}{d(x, \\mathbb{R}^n \\setminus A)} - \\frac{1}{d(y, \\mathbb{R}^n \\setminus A)}\\right|$$ (1) Demuestre que $d_A$ está bien definida y que es una distancia[cite: 12]. (2) Demuestre que si $(x_n)_n \\subset A$ y $x \\in A$, $\\|x_n - x\\| \\to 0$ si y solo si $d_A(x_n, x) \\to 0$[cite: 12].",
+            statement: "Sea $A \\subsetneq \\mathbb{R}^n$ un subconjunto abierto. Definimos $d_A: A \\times A \\to \\mathbb{R}$ por $$d_A(x,y) = \\Vert{}x-y\\Vert{} + \\left\\vert{}\\frac{1}{d(x, \\mathbb{R}^n \\setminus A)} - \\frac{1}{d(y, \\mathbb{R}^n \\setminus A)}\\right\\vert{}$$\n(1) Demuestre que $d_A$ está bien definida y que es una distancia.\n(2) Demuestre que si $(x_n)_n \\subset A$ y $x \\in A$, $\\Vert{}x_n - x\\Vert{} \\to 0$ si y solo si $d_A(x_n, x) \\to 0$.",
             state: "pending", comment: ""
           }
         ]
@@ -475,27 +474,27 @@
         exercises: [
           {
             id: "AN-B2-E1", list: "Lista 1", num: "Ej. 2", title: "Condición para Sucesión de Cauchy", desc: "Convergencia de la serie de distancias.",
-            statement: "Sea $(x_n)_n$ una sucesión en un espacio métrico $(X,d)$ tal que $\\sum_{n=1}^{\\infty} d(x_n, x_{n+1}) < \\infty$[cite: 3]. Demuestre que $(x_n)_n$ es una sucesión de Cauchy[cite: 3].",
+            statement: "Sea $(x_n)_n$ una sucesión en un espacio métrico $(X,d)$ tal que $\\sum_{n=1}^{\\infty} d(x_n, x_{n+1}) < \\infty$. Demuestre que $(x_n)_n$ es una sucesión de Cauchy.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B2-E2", list: "Lista 1", num: "Ej. 4", title: "Convergencia por Subsucesiones", desc: "Subsucesiones 3n, 3n+1 y 3n+2.",
-            statement: "Sea $(x_n)_n$ una sucesión en un espacio métrico $(X,d)$. Suponga que las sucesiones $(x_{3n})_n$, $(x_{3n+1})_n$ y $(x_{3n+2})_n$ convergen hacia el mismo punto $r$[cite: 3]. Demuestre que $(x_n)_n$ converge hacia $r$[cite: 3].",
+            statement: "Sea $(x_n)_n$ una sucesión en un espacio métrico $(X,d)$. Suponga que las sucesiones $(x_{3n})_n$, $(x_{3n+1})_n$ y $(x_{3n+2})_n$ convergen hacia el mismo punto $r$. Demuestre que $(x_n)_n$ converge hacia $r$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B2-E3", list: "Lista 2", num: "Ej. 18", title: "Equicontinuidad Local vs Global", desc: "Caracterización en compactos.",
-            statement: "Sea $K$ espacio métrico compacto[cite: 10]. Demuestre que $\\mathcal{F} \\subset \\mathcal{C}_{\\mathbb{R}}(K)$ es una familia equicontinua en $K$ si y solo si $\\mathcal{F}$ es equicontinua en $x$ para cada $x \\in K$[cite: 10].",
+            statement: "Sea $K$ espacio métrico compacto. Demuestre que $\\mathcal{F} \\subset \\mathcal{C}_{\\mathbb{R}}(K)$ es una familia equicontinua en $K$ si y solo si $\\mathcal{F}$ es equicontinua en $x$ para cada $x \\in K$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B2-E4", list: "Lista 2", num: "Ej. 20a", title: "Arzelà-Ascoli en Integrales", desc: "Aplicación a F_n(x) = integral f_n(t)dt.",
-            statement: "Sean $a < b$ y $(f_n)_n$ una sucesión de funciones continuas en $[a,b]$ uniformemente acotada[cite: 10, 11]. Para $n \\ge 1$, definimos $F_n(x) = \\int_a^x f_n(t) dt$[cite: 10, 11]. Demuestre que la sucesión $(F_n)_n$ tiene una subsucesión convergente uniformemente en $[a,b]$[cite: 10, 11].",
+            statement: "Sean $a < b$ y $(f_n)_n$ una sucesión de funciones continuas en $[a,b]$ uniformemente acotada. Para $n \\ge 1$, definimos $F_n(x) = \\int_a^x f_n(t) dt$. Demuestre que la sucesión $(F_n)_n$ tiene una subsucesión convergente uniformemente en $[a,b]$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B2-E5", list: "Parcial 7/11/2018", num: "Ej. 1", title: "Teorema de Intervalos Encajados", desc: "Enunciado y demostración teórica.",
-            statement: "Enuncie y demuestre el Teorema de los intervalos encajados[cite: 12].",
+            statement: "Enuncie y demuestre el Teorema de los intervalos encajados.",
             state: "pending", comment: ""
           }
         ]
@@ -509,22 +508,22 @@
         exercises: [
           {
             id: "AN-B3-E1", list: "Lista 1", num: "Ej. 21", title: "Continuidad Uniforme de Función Integral", desc: "Estudio de F(x) en [0, +inf).",
-            statement: "Sea $f: [0,\\infty) \\to \\mathbb{R}$ uniformemente continua en $[0,\\infty)$ y $g: [0,1] \\to \\mathbb{R}$ continua en $[0,1]$[cite: 6]. Demuestre que $F(x) = \\int_0^1 f(x+t)g(t) dt$ es uniformemente continua en $[0,\\infty)$[cite: 6].",
+            statement: "Sea $f: [0,\\infty) \\to \\mathbb{R}$ uniformemente continua en $[0,\\infty)$ y $g: [0,1] \\to \\mathbb{R}$ continua en $[0,1]$. Demuestre que $F(x) = \\int_0^1 f(x+t)g(t) dt$ es uniformemente continua en $[0,\\infty)$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B3-E2", list: "Lista 1", num: "Ej. 25a", title: "Preservación de Sucesiones de Cauchy", desc: "Bajo aplicaciones uniformemente continuas.",
-            statement: "Sea $(E,d)$ espacio métrico[cite: 7]. Demuestre que si $f: E \\to \\mathbb{R}$ es uniformemente continua y $(x_n)_n \\subset E$ es de Cauchy, entonces $(f(x_n))_n$ es de Cauchy en $\\mathbb{R}$[cite: 7].",
+            statement: "Sea $(E,d)$ espacio métrico. Demuestre que si $f: E \\to \\mathbb{R}$ es uniformemente continua y $(x_n)_n \\subset E$ es de Cauchy, entonces $(f(x_n))_n$ es de Cauchy en $\\mathbb{R}$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B3-E3", list: "Lista 1", num: "Ej. 27", title: "Máximo Absoluto sin Mínimo", desc: "Funciones estrictamente positivas con límite 0.",
-            statement: "Sea $(X,d)$ espacio métrico y $f: X \\to (0,\\infty)$ continua[cite: 7]. Suponga que para todo $\\epsilon > 0$ existe compacto $K_\\epsilon \\subset X$ tal que $f(x) < \\epsilon$ si $x \\notin K_\\epsilon$[cite: 7]. (a) Demuestre que $f$ tiene máximo absoluto[cite: 7]. (b) Demuestre que no tiene mínimo absoluto[cite: 7]. (c) Demuestre que es uniformemente continua[cite: 7].",
+            statement: "Sea $(X,d)$ espacio métrico y $f: X \\to (0,\\infty)$ continua. Suponga que para todo $\\epsilon > 0$ existe compacto $K_\\epsilon \\subset X$ tal que $f(x) < \\epsilon$ si $x \\notin K_\\epsilon$.\n(a) Demuestre que $f$ tiene máximo absoluto.\n(b) Demuestre que no tiene mínimo absoluto.\n(c) Demuestre que es uniformemente continua.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B3-E4", list: "Parcial 7/11/2018", num: "Ej. 3b", title: "Continuidad Uniforme de Raíz de x", desc: "Estudio en [0, +inf).",
-            statement: "Sea $f: [0,\\infty) \\to \\mathbb{R}$ definida por $f(x) = \\sqrt{x}$[cite: 12]. Demuestre que $f$ es uniformemente continua en $[0,\\infty)$[cite: 12].",
+            statement: "Sea $f: [0,\\infty) \\to \\mathbb{R}$ definida por $f(x) = \\sqrt{x}$. Demuestre que $f$ es uniformemente continua en $[0,\\infty)$.",
             state: "pending", comment: ""
           }
         ]
@@ -538,17 +537,17 @@
         exercises: [
           {
             id: "AN-B4-E1", list: "Lista 2", num: "Ej. 1", title: "Convergencia de nx e^(-nx)", desc: "Estudio en [0,1] y subintervalos.",
-            statement: "Considere la sucesión de funciones $f_n: [0,1] \\to \\mathbb{R}$ definida por $f_n(x) = n x e^{-nx}$[cite: 8]. (a) Calcule el límite puntual en $[0,1]$[cite: 8]. (b) ¿Converge uniformemente en $[0,1]$?[cite: 8] (c) Sea $0 < \\delta < 1$, ¿converge uniformemente en $[\\delta, 1]$?[cite: 8]",
+            statement: "Considere la sucesión de funciones $f_n: [0,1] \\to \\mathbb{R}$ definida por $f_n(x) = n x e^{-nx}$.\n(a) Calcule el límite puntual en $[0,1]$.\n(b) ¿Converge uniformemente en $[0,1]$?\n(c) Sea $0 < \\delta < 1$, ¿converge uniformemente en $[\\delta, 1]$?",
             state: "pending", comment: ""
           },
           {
             id: "AN-B4-E2", list: "Lista 2", num: "Ej. 2", title: "Convergencia de nx / (1 + n²x²)", desc: "Estudio en [0,1].",
-            statement: "Considere la sucesión $f_n(x) = \\frac{nx}{1+n^2 x^2}$ en $[0,1]$[cite: 8]. (a) Calcule el límite puntual[cite: 8]. (b) Estudie la convergencia uniforme en $[0,1]$[cite: 8]. (c) Estudie la convergencia uniforme en $[\\delta, 1]$[cite: 8].",
+            statement: "Considere la sucesión $f_n(x) = \\frac{nx}{1+n^2 x^2}$ en $[0,1]$.\n(a) Calcule el límite puntual.\n(b) Estudie la convergencia uniforme en $[0,1]$.\n(c) Estudie la convergencia uniforme en $[\\delta, 1]$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B4-E3", list: "Lista 2", num: "Ej. 3", title: "Parámetro Alfa en n^alpha x (1-x^2)^n", desc: "Análisis de convergencia uniforme.",
-            statement: "Para $\\alpha \\in \\mathbb{R}$, sea $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$[cite: 8]. (a) Calcule $\\lim_{n\\to\\infty} f_n^\\alpha(x)$[cite: 8]. (b) Demuestre que converge uniformemente si y solo si $\\alpha < 1/2$[cite: 8]. (c) Para qué valores converge uniformemente en $[\\rho, 1]$ ($0 < \\rho < 1$)[cite: 8].",
+            statement: "Para $\\alpha \\in \\mathbb{R}$, sea $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$.\n(a) Calcule $\\lim_{n\\to\\infty} f_n^\\alpha(x)$.\n(b) Demuestre que converge uniformemente si y solo si $\\alpha < 1/2$.\n(c) Para qué valores converge uniformemente en $[\\rho, 1]$ ($0 < \\rho < 1$).",
             state: "pending", comment: ""
           }
         ]
@@ -562,17 +561,17 @@
         exercises: [
           {
             id: "AN-B5-E1", list: "Lista 2", num: "Ej. 6", title: "Serie con Término x sqrt(n) / (1 + n x²)", desc: "Estudio de sucesión y serie.",
-            statement: "Sea $f_n(x) = \\frac{x\\sqrt{n}}{1+nx^2}$[cite: 8, 9]. (a) Calcule el límite puntual de $(f_n)_n$[cite: 8, 9]. (b) y (c) Estudie la convergencia uniforme en $\\mathbb{R}$ y $\\mathbb{R} \\setminus (-a,a)$[cite: 9]. (d), (e) y (f) Estudie la convergencia puntual y uniforme de la serie $\\sum_{n=1}^\\infty f_n^3$[cite: 9].",
+            statement: "Sea $f_n(x) = \\frac{x\\sqrt{n}}{1+nx^2}$.\n(a) Calcule el límite puntual de $(f_n)_n$.\n(b) y (c) Estudie la convergencia uniforme en $\\mathbb{R}$ y $\\mathbb{R} \\setminus (-a,a)$.\n(d), (e) y (f) Estudie la convergencia puntual y uniforme de la serie $\\sum_{n=1}^\\infty f_n^3$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B5-E2", list: "Lista 2", num: "Ej. 14", title: "Momentos Nulos vía Stone-Weierstrass", desc: "Demostración de función nula.",
-            statement: "Sea $f: [a,b] \\to \\mathbb{R}$ continua con todos los momentos nulos, $\\int_a^b x^n f(x) dx = 0$ para todo $n \\ge 0$[cite: 10]. Demuestre que $f \\equiv 0$[cite: 10].",
+            statement: "Sea $f: [a,b] \\to \\mathbb{R}$ continua con todos los momentos nulos, $\\int_a^b x^n f(x) dx = 0$ para todo $n \\ge 0$. Demuestre que $f \\equiv 0$.",
             state: "pending", comment: ""
           },
           {
             id: "AN-B5-E3", list: "Lista 2", num: "Ej. 17", title: "Aproximación de Funciones Pares", desc: "Aplicación de Stone-Weierstrass.",
-            statement: "Sea $E$ espacio normado y $K \\subset E$ compacto con $-K = K$[cite: 10]. Sea $\\mathcal{A} \\subset \\mathcal{C}(K)$ subálgebra que separa puntos, $1 \\in \\mathcal{A}$ y tal que si $f \\in \\mathcal{A}$ entonces $\\tilde{f}(x) = f(-x) \\in \\mathcal{A}$[cite: 10]. Demuestre que toda función par $f \\in \\mathcal{C}(K)$ se puede aproximar uniformemente por funciones pares de $\\mathcal{A}$[cite: 10].",
+            statement: "Sea $E$ espacio normado y $K \\subset E$ compacto con $-K = K$. Sea $\\mathcal{A} \\subset \\mathcal{C}(K)$ subálgebra que separa puntos, $1 \\in \\mathcal{A}$ y tal que si $f \\in \\mathcal{A}$ entonces $\\tilde{f}(x) = f(-x) \\in \\mathcal{A}$. Demuestre que toda función par $f \\in \\mathcal{C}(K)$ se puede aproximar uniformemente por funciones pares de $\\mathcal{A}$.",
             state: "pending", comment: ""
           }
         ]
