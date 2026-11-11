@@ -425,6 +425,7 @@
     // ==========================================
     // DATOS DE ANÀLISI MATEMÀTICA (30 ejercicios exactos)
     // ==========================================
+
     const ANALISI_BLOCKS = [
       {
         id: 1,
@@ -434,43 +435,33 @@
         headerBg: "bg-teal-900/40 text-teal-200 border-teal-500/40",
         exercises: [
           {
-            id: "AN-B1-E1", list: "Lista 1", num: "Ej. 8", title: "Métrica Acotada Equivalente", desc: "Demostración de d*(x,y) = d(x,y)/(1+d(x,y)).",
-            statement: "Demostración de que $d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$ es una distancia y preserva sucesiones convergentes.",
+            id: "AN-B1-E1", list: "Lista 1", num: "Ej. 8", title: "Métrica Acotada Equivalente", desc: "Demostración de d*(x,y) y sucesiones.",
+            statement: "Sea $(X,d)$ un espacio métrico[cite: 3]. Definimos $$d^*(x,y) = \\frac{d(x,y)}{1+d(x,y)}$$ (a) Demuestre que $d^*$ es una distancia[cite: 4]. (b) Demuestre que $d$ y $d^*$ tienen las mismas sucesiones convergentes[cite: 4].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B1-E2", list: "Lista 1", num: "Ej. 9", title: "Métrica Vía del Tren en R²", desc: "Distancia en R² tipo vía del tren y descripción de la bola.",
-            statement: "Distancia en $\\mathbb{R}^2$ tipo \"vía del tren\" y descripción de la bola abierta.",
+            id: "AN-B1-E2", list: "Lista 1", num: "Ej. 9", title: "Métrica Vía del Tren en R²", desc: "Distancia tipo vía del tren y bolas abiertas.",
+            statement: "Sea $d: \\mathbb{R}^2 \\to \\mathbb{R}$ definida por $d(x,y) = \\|x-y\\|$ si $x, y, 0$ están alineados, y $\\|x\\| + \\|y\\|$ en caso contrario (con $\\|x\\|$ norma euclidiana)[cite: 4]. (i) Demuestre que $d$ es una distancia[cite: 4]. (ii) Describa explícitamente $B((1,1),2)$[cite: 4]. (iii) Demuestre las propiedades de convergencia y alineación de sucesiones de Cauchy[cite: 4].",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E3", list: "Lista 1", num: "Ej. 10", title: "Suma de Cerrado y Compacto", desc: "Cerradura de B + K en R.",
-            statement: "Demostración de que la suma de un cerrado $B$ y un compacto $K$ en $\\mathbb{R}$ ($B+K$) es un conjunto cerrado.",
+            statement: "Sea $B \\subset \\mathbb{R}$ cerrado y $K \\subset \\mathbb{R}$ compacto[cite: 4]. Pruebe que el conjunto $B+K = \\{x+y : x \\in B, y \\in K\\}$ es cerrado[cite: 4].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B1-E4", list: "Lista 1", num: "Ej. 13", title: "Homeomorfismo con la Bola Abierta", desc: "Aplicación phi(x) = rx / (1 + ||x||).",
-            statement: "Homeomorfismo entre un espacio normado $X$ y la bola $B(0,r)$ mediante $\\phi(x) = \\frac{rx}{1+\\Vert{}x\\Vert{}}$.",
+            id: "AN-B1-E4", list: "Lista 1", num: "Ej. 13", title: "Homeomorfismo con la Bola Abierta", desc: "Homeomorfismo entre espacio normado y bola.",
+            statement: "Sea $(X, \\|\\cdot\\|)$ un espacio normado[cite: 5]. Demuestre que para cada $r > 0$, $X$ es homeomorfo a la bola $B(0,r)$[cite: 5].",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E5", list: "Lista 1", num: "Ej. 19", title: "Distancia entre Compacto y Cerrado", desc: "Desigualdad d(K, F) > 0 para disjuntos.",
-            statement: "Demostración de que la distancia entre un compacto $K$ y un cerrado $F$ disjuntos es estrictamente positiva ($d(K,F) > 0$).",
+            statement: "Sean $K$ un subconjunto compacto y $F$ un subconjunto cerrado de un espacio métrico $(X,d)$ tales que $K \\cap F = \\emptyset$[cite: 6]. Demuestre que $l(K,F) := \\inf\\{d(x,y) : x \\in K, y \\in F\\} > 0$[cite: 6].",
             state: "pending", comment: ""
           },
           {
             id: "AN-B1-E6", list: "Parcial 7/11/2018", num: "Ej. 2b", title: "Distancia d_A en Abierto Propio", desc: "Construcción mediante distancia al complemento.",
-            statement: "Distancia $d_A(x,y)$ en un conjunto abierto $A \\subsetneq \\mathbb{R}^n$ construida mediante la distancia al complemento.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B1-E7", list: "Reevaluació Tardor", num: "Ej. 3", title: "Propiedades del Subconjunto en l^p", desc: "Estudio de cerrado/abierto en espacios normados l^p.",
-            statement: "Propiedades del subconjunto $A_p$ en el espacio normado $\\ell^p$ ($p \\ge 1$) y prueba de si es o no cerrado.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B1-E8", list: "Prova Final 19/01/2021", num: "Ej. 2", title: "Espacio Métrico sobre N", desc: "Métrica no acotada y puntos aislados.",
-            statement: "Espacio métrico completo $(X, d)$ sobre $X = \\mathbb{N}$ con métrica no acotada y puntos aislados.",
+            statement: "Sea $A \\subsetneq \\mathbb{R}^n$ un subconjunto abierto[cite: 12]. Definimos $d_A: A \\times A \\to \\mathbb{R}$ por $$d_A(x,y) = \\|x-y\\| + \\left|\\frac{1}{d(x, \\mathbb{R}^n \\setminus A)} - \\frac{1}{d(y, \\mathbb{R}^n \\setminus A)}\\right|$$ (1) Demuestre que $d_A$ está bien definida y que es una distancia[cite: 12]. (2) Demuestre que si $(x_n)_n \\subset A$ y $x \\in A$, $\\|x_n - x\\| \\to 0$ si y solo si $d_A(x_n, x) \\to 0$[cite: 12].",
             state: "pending", comment: ""
           }
         ]
@@ -483,33 +474,28 @@
         headerBg: "bg-cyan-900/40 text-cyan-200 border-cyan-500/40",
         exercises: [
           {
-            id: "AN-B2-E9", list: "Lista 1", num: "Ej. 2", title: "Condición para Sucesión de Cauchy", desc: "Convergencia de la serie de distancias.",
-            statement: "Condición suficiente para sucesión de Cauchy mediante la convergencia de la serie de distancias $\\sum d(x_n, x_{n+1}) < \\infty$.",
+            id: "AN-B2-E1", list: "Lista 1", num: "Ej. 2", title: "Condición para Sucesión de Cauchy", desc: "Convergencia de la serie de distancias.",
+            statement: "Sea $(x_n)_n$ una sucesión en un espacio métrico $(X,d)$ tal que $\\sum_{n=1}^{\\infty} d(x_n, x_{n+1}) < \\infty$[cite: 3]. Demuestre que $(x_n)_n$ es una sucesión de Cauchy[cite: 3].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B2-E10", list: "Lista 1", num: "Ej. 4", title: "Convergencia por Subsucesiones", desc: "Subsucesiones 3n, 3n+1 y 3n+2.",
-            statement: "Convergencia de una sucesión $(x_n)_n$ si sus tres subsucesiones $(x_{3n})_n$, $(x_{3n+1})_n$ y $(x_{3n+2})_n$ convergen al mismo punto.",
+            id: "AN-B2-E2", list: "Lista 1", num: "Ej. 4", title: "Convergencia por Subsucesiones", desc: "Subsucesiones 3n, 3n+1 y 3n+2.",
+            statement: "Sea $(x_n)_n$ una sucesión en un espacio métrico $(X,d)$. Suponga que las sucesiones $(x_{3n})_n$, $(x_{3n+1})_n$ y $(x_{3n+2})_n$ convergen hacia el mismo punto $r$[cite: 3]. Demuestre que $(x_n)_n$ converge hacia $r$[cite: 3].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B2-E11", list: "Lista 2", num: "Ej. 18", title: "Equicontinuidad Local vs Global", desc: "Caracterización en compactos.",
-            statement: "Caracterización de equicontinuidad en puntos vs en todo el espacio métrico compacto $K$.",
+            id: "AN-B2-E3", list: "Lista 2", num: "Ej. 18", title: "Equicontinuidad Local vs Global", desc: "Caracterización en compactos.",
+            statement: "Sea $K$ espacio métrico compacto[cite: 10]. Demuestre que $\\mathcal{F} \\subset \\mathcal{C}_{\\mathbb{R}}(K)$ es una familia equicontinua en $K$ si y solo si $\\mathcal{F}$ es equicontinua en $x$ para cada $x \\in K$[cite: 10].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B2-E12", list: "Lista 2", num: "Ej. 20a", title: "Arzelà-Ascoli en Integrales", desc: "Aplicación a F_n(x) = integral f_n(t)dt.",
-            statement: "Aplicación del Teorema de Arzelà-Ascoli a la sucesión de integrales $F_n(x) = \\int_a^x f_n(t) dt$.",
+            id: "AN-B2-E4", list: "Lista 2", num: "Ej. 20a", title: "Arzelà-Ascoli en Integrales", desc: "Aplicación a F_n(x) = integral f_n(t)dt.",
+            statement: "Sean $a < b$ y $(f_n)_n$ una sucesión de funciones continuas en $[a,b]$ uniformemente acotada[cite: 10, 11]. Para $n \\ge 1$, definimos $F_n(x) = \\int_a^x f_n(t) dt$[cite: 10, 11]. Demuestre que la sucesión $(F_n)_n$ tiene una subsucesión convergente uniformemente en $[a,b]$[cite: 10, 11].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B2-E13", list: "Parcial 7/11/2018", num: "Ej. 1", title: "Teorema de Intervalos Encajados", desc: "Enunciado y demostración teórica.",
-            statement: "Enunciado y demostración teórica del Teorema de los Intervalos Encajados (Teorema dels intervals encaixats).",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B2-E14", list: "Reevaluació 27/01/2020", num: "Ej. 1", title: "Demostración Teorema de Weierstrass", desc: "Máximo y mínimo en compactos.",
-            statement: "Demostración del Teorema de Weierstrass (toda función continua en un compacto $K$ alcanza su máximo).",
+            id: "AN-B2-E5", list: "Parcial 7/11/2018", num: "Ej. 1", title: "Teorema de Intervalos Encajados", desc: "Enunciado y demostración teórica.",
+            statement: "Enuncie y demuestre el Teorema de los intervalos encajados[cite: 12].",
             state: "pending", comment: ""
           }
         ]
@@ -522,33 +508,23 @@
         headerBg: "bg-blue-900/40 text-blue-200 border-blue-500/40",
         exercises: [
           {
-            id: "AN-B3-E15", list: "Lista 1", num: "Ej. 21", title: "Continuidad Uniforme de Función Integral", desc: "Estudio de F(x) en [0, +inf).",
-            statement: "Continuidad uniforme de la función integral $F(x) = \\int_0^1 f(x+t)g(t) dt$ en $[0, +\\infty)$.",
+            id: "AN-B3-E1", list: "Lista 1", num: "Ej. 21", title: "Continuidad Uniforme de Función Integral", desc: "Estudio de F(x) en [0, +inf).",
+            statement: "Sea $f: [0,\\infty) \\to \\mathbb{R}$ uniformemente continua en $[0,\\infty)$ y $g: [0,1] \\to \\mathbb{R}$ continua en $[0,1]$[cite: 6]. Demuestre que $F(x) = \\int_0^1 f(x+t)g(t) dt$ es uniformemente continua en $[0,\\infty)$[cite: 6].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B3-E16", list: "Lista 1", num: "Ej. 25a", title: "Preservación de Sucesiones de Cauchy", desc: "Bajo aplicaciones uniformemente continuas.",
-            statement: "Preservación de sucesiones de Cauchy mediante aplicaciones uniformemente continuas.",
+            id: "AN-B3-E2", list: "Lista 1", num: "Ej. 25a", title: "Preservación de Sucesiones de Cauchy", desc: "Bajo aplicaciones uniformemente continuas.",
+            statement: "Sea $(E,d)$ espacio métrico[cite: 7]. Demuestre que si $f: E \\to \\mathbb{R}$ es uniformemente continua y $(x_n)_n \\subset E$ es de Cauchy, entonces $(f(x_n))_n$ es de Cauchy en $\\mathbb{R}$[cite: 7].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B3-E17", list: "Lista 1", num: "Ej. 27", title: "Máximo Absoluto sin Mínimo", desc: "Funciones estrictamente positivas con límite 0.",
-            statement: "Demostración de existencia de máximo absoluto y ausencia de mínimo en funciones continuas estrictamente positivas con límite $0$ en el infinito.",
+            id: "AN-B3-E3", list: "Lista 1", num: "Ej. 27", title: "Máximo Absoluto sin Mínimo", desc: "Funciones estrictamente positivas con límite 0.",
+            statement: "Sea $(X,d)$ espacio métrico y $f: X \\to (0,\\infty)$ continua[cite: 7]. Suponga que para todo $\\epsilon > 0$ existe compacto $K_\\epsilon \\subset X$ tal que $f(x) < \\epsilon$ si $x \\notin K_\\epsilon$[cite: 7]. (a) Demuestre que $f$ tiene máximo absoluto[cite: 7]. (b) Demuestre que no tiene mínimo absoluto[cite: 7]. (c) Demuestre que es uniformemente continua[cite: 7].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B3-E18", list: "Parcial 7/11/2018", num: "Ej. 3b", title: "Continuidad Uniforme de Raíz de x", desc: "Estudio en [0, +inf).",
-            statement: "Continuidad uniforme de $f(x) = \\sqrt{x}$ en $[0, +\\infty)$.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B3-E19", list: "Prova Final 19/01/2021", num: "Ej. 3a", title: "Continuidad Uniforme de 1/p(x)", desc: "Polinomio sin raíces reales.",
-            statement: "Continuidad uniforme de $f(x) = \\frac{1}{p(x)}$ para un polinomio sin raíces reales.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B3-E20", list: "Examen Final 10/01/2019", num: "Ej. 3.2", title: "Continuidad de Diferencia Trigonométrica", desc: "Estudio en (0,1) de 1/sin(x) - 1/x.",
-            statement: "Estudio de la continuidad uniforme de $f(x) = \\frac{1}{\\sin x} - \\frac{1}{x}$ en el intervalo abierto $(0,1)$.",
+            id: "AN-B3-E4", list: "Parcial 7/11/2018", num: "Ej. 3b", title: "Continuidad Uniforme de Raíz de x", desc: "Estudio en [0, +inf).",
+            statement: "Sea $f: [0,\\infty) \\to \\mathbb{R}$ definida por $f(x) = \\sqrt{x}$[cite: 12]. Demuestre que $f$ es uniformemente continua en $[0,\\infty)$[cite: 12].",
             state: "pending", comment: ""
           }
         ]
@@ -561,28 +537,18 @@
         headerBg: "bg-emerald-900/40 text-emerald-200 border-emerald-500/40",
         exercises: [
           {
-            id: "AN-B4-E21", list: "Lista 2", num: "Ej. 1", title: "Convergencia de nx e^(-nx)", desc: "Estudio en [0,1] y subintervalos.",
-            statement: "Límite puntual y convergencia uniforme de $f_n(x) = n x e^{-nx}$ en $[0,1]$ y en subintervalos $[\\delta, 1]$.",
+            id: "AN-B4-E1", list: "Lista 2", num: "Ej. 1", title: "Convergencia de nx e^(-nx)", desc: "Estudio en [0,1] y subintervalos.",
+            statement: "Considere la sucesión de funciones $f_n: [0,1] \\to \\mathbb{R}$ definida por $f_n(x) = n x e^{-nx}$[cite: 8]. (a) Calcule el límite puntual en $[0,1]$[cite: 8]. (b) ¿Converge uniformemente en $[0,1]$?[cite: 8] (c) Sea $0 < \\delta < 1$, ¿converge uniformemente en $[\\delta, 1]$?[cite: 8]",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B4-E22", list: "Lista 2", num: "Ej. 2", title: "Convergencia de nx / (1 + n²x²)", desc: "Estudio en [0,1].",
-            statement: "Límite puntual y convergencia uniforme de $f_n(x) = \\frac{nx}{1 + n^2 x^2}$ en $[0,1]$ y subintervalos $[\\delta, 1]$.",
+            id: "AN-B4-E2", list: "Lista 2", num: "Ej. 2", title: "Convergencia de nx / (1 + n²x²)", desc: "Estudio en [0,1].",
+            statement: "Considere la sucesión $f_n(x) = \\frac{nx}{1+n^2 x^2}$ en $[0,1]$[cite: 8]. (a) Calcule el límite puntual[cite: 8]. (b) Estudie la convergencia uniforme en $[0,1]$[cite: 8]. (c) Estudie la convergencia uniforme en $[\\delta, 1]$[cite: 8].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B4-E23", list: "Lista 2", num: "Ej. 3", title: "Parámetro Alfa en n^alpha x (1-x^2)^n", desc: "Análisis de convergencia uniforme.",
-            statement: "Análisis del parámetro $\\alpha$ para la convergencia uniforme de $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B4-E24", list: "Final Tardor", num: "Ej. 4", title: "Sucesión con Pico Móvil", desc: "Estudio de x² / (x² + (1-nx)²).",
-            statement: "Límite puntual y convergencia uniforme de $f_n(x) = \\frac{x^2}{x^2 + (1-nx)^2}$ en $[0,1]$ y en $[a,1]$.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B4-E25", list: "Prova Final 9/01/2020", num: "Ej. 4b", title: "Convergencia de Potencia Trigonométrica", desc: "Estudio en toda la recta real.",
-            statement: "Convergencia puntual y uniforme de $g_n(x) = \\left(\\frac{1+n^2 \\sin^2 x}{2n^2 + \\sin x}\\right)^{10}$ en toda la recta real $\\mathbb{R}$.",
+            id: "AN-B4-E3", list: "Lista 2", num: "Ej. 3", title: "Parámetro Alfa en n^alpha x (1-x^2)^n", desc: "Análisis de convergencia uniforme.",
+            statement: "Para $\\alpha \\in \\mathbb{R}$, sea $f_n^\\alpha(x) = n^\\alpha x (1-x^2)^n$ en $[0,1]$[cite: 8]. (a) Calcule $\\lim_{n\\to\\infty} f_n^\\alpha(x)$[cite: 8]. (b) Demuestre que converge uniformemente si y solo si $\\alpha < 1/2$[cite: 8]. (c) Para qué valores converge uniformemente en $[\\rho, 1]$ ($0 < \\rho < 1$)[cite: 8].",
             state: "pending", comment: ""
           }
         ]
@@ -595,34 +561,24 @@
         headerBg: "bg-purple-900/40 text-purple-200 border-purple-500/40",
         exercises: [
           {
-            id: "AN-B5-E26", list: "Lista 2", num: "Ej. 6", title: "Serie con Término x sqrt(n) / (1 + n x²)", desc: "Estudio de sucesión y serie.",
-            statement: "Estudio de la convergencia puntual y uniforme de la sucesión y de la serie $\\sum_{n=1}^\\infty f_n^3(x)$ para $f_n(x) = \\frac{x\\sqrt{n}}{1 + n x^2}$.",
+            id: "AN-B5-E1", list: "Lista 2", num: "Ej. 6", title: "Serie con Término x sqrt(n) / (1 + n x²)", desc: "Estudio de sucesión y serie.",
+            statement: "Sea $f_n(x) = \\frac{x\\sqrt{n}}{1+nx^2}$[cite: 8, 9]. (a) Calcule el límite puntual de $(f_n)_n$[cite: 8, 9]. (b) y (c) Estudie la convergencia uniforme en $\\mathbb{R}$ y $\\mathbb{R} \\setminus (-a,a)$[cite: 9]. (d), (e) y (f) Estudie la convergencia puntual y uniforme de la serie $\\sum_{n=1}^\\infty f_n^3$[cite: 9].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B5-E27", list: "Lista 2", num: "Ej. 14", title: "Momentos Nulos vía Stone-Weierstrass", desc: "Demostración de función nula.",
-            statement: "Demostración del Teorema de los momentos nulos ($\\int_a^b x^n f(x) dx = 0, \\forall n \\ge 0 \\implies f \\equiv 0$) usando Stone-Weierstrass.",
+            id: "AN-B5-E2", list: "Lista 2", num: "Ej. 14", title: "Momentos Nulos vía Stone-Weierstrass", desc: "Demostración de función nula.",
+            statement: "Sea $f: [a,b] \\to \\mathbb{R}$ continua con todos los momentos nulos, $\\int_a^b x^n f(x) dx = 0$ para todo $n \\ge 0$[cite: 10]. Demuestre que $f \\equiv 0$[cite: 10].",
             state: "pending", comment: ""
           },
           {
-            id: "AN-B5-E28", list: "Lista 2", num: "Ej. 17", title: "Aproximación de Funciones Pares", desc: "Aplicación de Stone-Weierstrass.",
-            statement: "Aproximación de funciones pares en subálgebras continuas $C(K)$ mediante el Teorema de Stone-Weierstrass.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B5-E29", list: "Prova Final 9/01/2020", num: "Ej. 5", title: "Dominio y Suma de Serie Exponencial", desc: "Estudio de suma S(x) para la serie dada.",
-            statement: "Dominio de convergencia $E$, convergencia uniforme y función suma $S(x)$ de $\\sum_{n=1}^\\infty \\frac{e^{(n+1)x}}{n(n+1)}$.",
-            state: "pending", comment: ""
-          },
-          {
-            id: "AN-B5-E30", list: "Final Tardor", num: "Ej. 5.2", title: "Dominio y Suma de Serie Logarítmica/Exponencial", desc: "Cálculo de función suma.",
-            statement: "Dominio de convergencia y cálculo de la función suma de $\\sum_{n=1}^\\infty \\frac{1}{n}(e^{x^2}-2)^n$.",
+            id: "AN-B5-E3", list: "Lista 2", num: "Ej. 17", title: "Aproximación de Funciones Pares", desc: "Aplicación de Stone-Weierstrass.",
+            statement: "Sea $E$ espacio normado y $K \\subset E$ compacto con $-K = K$[cite: 10]. Sea $\\mathcal{A} \\subset \\mathcal{C}(K)$ subálgebra que separa puntos, $1 \\in \\mathcal{A}$ y tal que si $f \\in \\mathcal{A}$ entonces $\\tilde{f}(x) = f(-x) \\in \\mathcal{A}$[cite: 10]. Demuestre que toda función par $f \\in \\mathcal{C}(K)$ se puede aproximar uniformemente por funciones pares de $\\mathcal{A}$[cite: 10].",
             state: "pending", comment: ""
           }
         ]
       }
     ];
-
+    
     // FUNCIÓN AUXILIAR DE RECUPERACIÓN / MIGRACIÓN AUTOMÁTICA
     function loadAndMigrateData(finalKey, legacyKeys, defaultBlocks) {
       const savedFinal = localStorage.getItem(finalKey);
